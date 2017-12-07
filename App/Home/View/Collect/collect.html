@@ -1,0 +1,217 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+     <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+</block>
+<body>
+<!-- header End -->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+              
+                <div class="fl"><a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a></div>
+              
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- 商城快讯 begin -->
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd ><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd class="cur"><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>我的收藏</h2></div>
+                <div class="member-backs member-icons fr"><a href="#">搜索</a></div>
+                <div class="member-about fr"><input type="text" placeholder="商品名称/商品编号/订单编号"></div>
+            </div>
+            <div class="member-switch clearfix">
+                <ul id="H-table" class="H-table">
+                    <li class="cur"><a href="#">我的收藏的商品</a></li>
+                </ul>
+            </div>
+            <div class="member-border">
+
+
+               <div class="member-return H-over">
+                   <div class="member-troll clearfix">
+                       
+                   </div>
+                   <div class="member-vessel">
+                       <ul>
+                        <!-- 遍历开始 -->
+                         <li class="clearfix" id="li1">
+                         <empty name="data">
+                         暂无收藏
+                         <else />
+                            <volist name="data" id="v">
+                             <div class="member-tenant fl clearfix">
+                                 
+                                 <div>
+                                     <a href="{:U('Goods/detail',['id'=>$v['id']])}"><img src="__PUBLIC__/Uploads/{$v.pic}" width="114" height="114" title="点击查看商品"></a>
+                                     <p>{$v.name}</p>
+                                     <p>价格：￥{$v.price}</p>
+                                     <p>收藏时间：{$v.collectTime|date='Y-m-d H:i:s',###}</p>
+                                     <p style="position: relative;top:5px;left:40px"><a onclick="del(this,{$v.id},{$_SESSION['HomeUser']['id']})" href="javascript:void(0);" class="member-shops" >取消收藏</a></p>
+                                 </div>
+                              </div>
+                            </volist>
+                         </empty>
+                            <!-- 结束 -->
+                         </li>
+                       </ul>
+                   </div>
+               </div>
+               <!-- ajax删除 -->
+               <script>
+                  function del(obj,gid,uid){
+                    $.post('{:U("delCollect2")}',{'gid':gid,'uid':uid},function(res){
+                      if(res.status == '1'){
+                        $(obj).parent().parent().parent().remove();
+                      }else{
+                        alert(res.msg);
+                      }
+                    });
+                  }
+               </script>
+                <div class="clearfix" style="padding:30px 20px;">
+                    <div class="fr pc-search-g pc-search-gs">
+                    <empty name="page">
+                    <else/>
+                      <b class="page" id="ipage">
+                      {$page}
+                      </b>
+                    </empty>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script>
+$('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+$('body').delegate('.page a','click',function(){
+  var url = $(this).attr('href');
+  $.ajax({
+    type:'get',
+    url:url,
+    success:function(res){
+      // alert(res);
+      console.log(res);
+      div = '';
+      // alert(1);
+      $('#ipage').html(res.page);
+      delete res.page;
+      for (var k in res){
+        div += '<div class="member-tenant fl clearfix"><div><a href="{:U("Goods/detail",["id"=>'+res[k].id+'])}"><img src="__PUBLIC__/Uploads/'+res[k].pic+'" width="114" height="114" title="点击查看商品"></a><p>{$v.name}</p><p>价格：￥'+res[k].price+'</p><p>收藏时间：'+res[k].addtime+'</p><p style="position: relative;top:5px;left:40px"><a onclick="del(this,'+res[k].id+','+{$_SESSION['HomeUser']['id']}+')" href="javascript:void(0);" class="member-shops" >取消收藏</a></p></div></div>'
+      }
+      $('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+        // console.log(li);  
+      $('#li1').html(div);
+    },
+  })
+  return false;
+})
+    </script>
+</section>
+<!-- 商城快讯 End -->
+<!--- footer begin-->
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

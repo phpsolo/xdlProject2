@@ -1,0 +1,91 @@
+<extend name="Index/index" />
+<block name="header">
+    <script src="__PUBLIC__/Admin/js/jquery.dataTables.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/jquery.dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/Admin/js/laydate/laydate.js" type="text/javascript"></script>
+    <title>添加产品</title>
+    <style>
+    #disabled:hover {
+        cursor:no-drop;
+    }
+    </style>
+</block>
+<!--[if lt IE 9]>
+<script src="__PUBLIC__/Admin/js/html5shiv.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Admin/js/respond.min.js"></script>
+<script src="__PUBLIC__/Admin/js/css3-mediaqueries.js"  type="text/javascript"></script>
+  <![endif]-->
+</head>
+<block name="main">
+<body>
+<form method="post" class="form-horizontal">
+<input name="id" type="hidden" value="{$data['id']}" class="col-xs-4"/>
+<div class="margin">
+<div class="add_style">
+
+    <ul>
+
+        <li class="clearfix"><label class="control-group control-label"><i>*</i>ID：&nbsp;&nbsp;</label><div class="controls"><input readonly value="{$data['id']}" id="disabled" class="col-xs-4"/></div></li>
+
+        <li class="clearfix"><label class="control-group control-label"><i>*</i>分类名：&nbsp;&nbsp;</label><div class="controls"><input name="name" type="text" value="{$data['name']}" class="col-xs-4"/></div></li>
+
+    </ul>
+    <div class="Button_operation btn_width">
+        <button class="btn button_btn bg-deep-blue">确认修改</button>
+        <a href="{:U('index')}" class="btn button_btn bg-gray">返回</a>
+    </div>
+
+</div>
+</div>
+</form>
+</body>
+</block>
+</html>
+<block name="js">
+   <!--复文本编辑框-->
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Admin/js/utf8-jsp/ueditor.config.js"></script>
+<script>
+var i = 1;
+function addAttr(obj)
+{
+    let str = $(obj).prev().val();
+    $(obj).parent().parent().parent().before('<li class="clearfix"><label class="label_name col-xs-1"><i>*</i>条件'+i+'：&nbsp;&nbsp;</label><div class="Add_content col-xs-11" id="Upload"><div class="images_Upload clearfix margin-bottom" style="width:100%" id="images_Upload"> 属性：<input size="5" type="text" name="attr[]" /> 值：<input size="5" type="text" name="val[]" /></div></div></li><li class="clearfix"><label class="label_name col-xs-1">&nbsp;&nbsp;</label><div class="Add_content col-xs-11" id="Upload"><div class="images_Upload clearfix margin-bottom" style="width:100%" id="images_Upload"> 属性：<input size="5" type="text" name="attr[]" /> 值：<input size="5" type="text" name="val[]" /> 价格：<input size="5" type="number" name="price[]" /> 库存：<input size="5" type="number" name="stock[]" /></div></div></li>');
+    i++;
+}
+
+function addVal(obj)
+{
+    let str = $(obj).prev().val();
+    $(obj).parent().parent().after('<label class="label_name col-xs-1"></label><div class="Add_content col-xs-11" id="Upload"><div class="images_Upload clearfix margin-bottom" style="width:100%" id="images_Upload"> 属性：<input size="5" type="text" name="attr[]" /> 值：<input size="5" type="text" name="val[]" /><span style="text-align: center;height:32px;line-height: 32px;visibility:hidden" class="add_Upload bg-deep-blue" id="add_Upload"><i class="fa  fa-plus"></i></span> 价格：<input size="5" type="text" name="price[]" /> 库存：<input size="5" type="text" name="stock[]" /></div></div>');
+}
+
+function delete_Upload(obj)
+{
+    console.log(1);
+    $(obj).prev().children().last().remove();
+    $(obj).prev().append('<input name="pic[]" multiple style="display:none" type="file" />');
+}
+
+$(function() { 
+    $("#Sellerber").frame({
+        float : 'left',
+        color_btn:'.skin_select',
+        header:70,//顶部高度
+        bottom:30,//底部高度
+        menu:200,//菜单栏宽度
+        Sellerber_menu:'.list_content',
+        Sellerber_header:'.Sellerber_header',
+    });
+});
+
+/*********滚动事件*********/
+$("body").niceScroll({  
+    cursorcolor:"#888888",  
+    cursoropacitymax:1,  
+    touchbehavior:false,  
+    cursorwidth:"5px",  
+    cursorborder:"0",  
+    cursorborderradius:"5px"  
+});
+</script>
+</block>

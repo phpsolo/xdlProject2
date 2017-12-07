@@ -1,0 +1,70 @@
+<extend name="Index/index" />
+<block name="main">
+<body>
+<div class="margin add_administrator" id="page_style">
+    <div class="add_style add_administrator_style">
+    <div class="title_name">修改网站seo信息</div>
+    <form action="" method="post" id="form-admin-add" enctype="multipart/form-data">
+    <ul>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>标题：</label>
+     <div class="formControls col-xs-6">
+     <input type="hidden" name="id" value="{$id}" />
+     <input type="text" class="input-text col-xs-12" value="{$seoarr?$seoarr[0]['title']:''}" placeholder="" id="user-name" name="title" datatype="*2-16" nullmsg="用户名不能为空"></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>关键词：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" name="keywords" autocomplete="off" value="{$seoarr?$seoarr[0]['keywords']:''}" class="input-text col-xs-12" datatype="*6-20">
+    </div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>内容摘要：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" name="description" autocomplete="off" value="{$seoarr?$seoarr[0]['description']:''}" class="input-text col-xs-12" datatype="*6-20">
+    </div>
+     <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>  
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>上传logo：</label>
+     <div class="formControls col-xs-6">
+     <input type="file" name="pic" autocomplete="off" value="" class="input-text col-xs-12" datatype="*6-20">
+    </div>
+     <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>  
+    <li class="clearfix">
+            <div class="col-xs-2 col-lg-2">&nbsp;</div>
+            <div class="col-xs-6">
+      <input class="btn button_btn bg-deep-blue " type="submit" id="Add_Administrator" value="提交">
+      <input name="reset" type="reset" class="btn button_btn btn-gray" value="重置" />
+      
+            </div>
+        </li>
+    </ul>
+    </form>
+    </div>
+    <div class="split_line"></div>
+    <div class="Notice_style l_f">
+      
+    </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+
+/*******滚动条*******/
+$("body").niceScroll({  
+    cursorcolor:"#888888",  
+    cursoropacitymax:1,  
+    touchbehavior:false,  
+    cursorwidth:"5px",  
+    cursorborder:"0",  
+    cursorborderradius:"5px"  
+});
+
+</script>
+</block>

@@ -1,0 +1,1043 @@
+<block name="top">
+<!doctype html>
+<html>
+ <head> 
+	<meta charset="UTF-8">
+<!-- 遍历seo开始 -->
+<volist name="seo" id="v">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="title" content="{$v['title']?$v['title']:''}">
+    <meta name="keywords" content="{$v['keywords']?$v['keywords']:''}">
+    <meta name="description" content="{$v['description']?$v['description']:''}">
+</volist>
+<!-- 结束 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+	<title>歪秀购物</title>
+    <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style1.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+	<script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Home-js/index.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Home-js/js-tab.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Home-js/MSClass.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home-js/jcarousellite.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Home-js/top.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.dorpdown').hover(function() {
+                $(this).addClass("hover");
+            }, function() {
+                $(this).removeClass("hover");
+            })
+        })
+        $('a').hover(function() {
+            $(this).removeClass('grayscale')
+        }, function() {
+            $(this).addClass('grayscale')
+        });
+    </script>
+ </head>
+
+ <body>
+<div style="position:relative;z-index:1;" id="headpic">
+    <empty name="adsarr">
+    <else/>
+    <a href="{$adsarr[0]['url']}" target="_blank"><img src="__PUBLIC__/Upload/{$adsarr[0]['pic']}" style="width:100%;height: 250px" id="pic" name="pic"></a>
+    <a><span  href="javascript:void(0);" onclick="del(this)" style="position:absolute;z-index:2;right:220px;top:5px;font-size:18px;color:lightgrey;background-color:#BD651D;">&nbsp;X&nbsp;</span></a>
+    </empty>
+ </div>
+    <!-- 广告模块 -->
+    <script>
+    //获取id
+    var pic = document.getElementById('pic');
+    var i = 1;
+    timers = window.onload =setInterval(function(){
+        // 将数据转换成json格式
+        var obj = eval('<?php echo json_encode($adsarr);?>');
+        var count = eval('<?php echo json_encode($count);?>');
+        // alert(count);
+        // alert(obj[0]);
+        pic.src="__PUBLIC__/Upload/"+ obj[i];
+        if(i < count){
+            i++;
+           console.log(i);
+        } else {
+            // 最后一个广告自动关闭，移除节点
+            $(pic).parent().parent().remove();
+        }
+    },10000);
+    function del(obj){
+        $(obj).parent().parent().remove();
+    }
+    </script>
+<div>
+    <div id="moquu_wxin" class="moquu_wxin"><a href="javascript:void(0)"><div class="moquu_wxinh"></div></a></div>
+    <div id="moquu_wshare" class="moquu_wshare"><a href="javascript:void(0)" style="text-indent:0"><div class="moquu_wshareh"><img src="__PUBLIC__/Home-icon/moquu_wshare.png" width="100%"></div></a></div>
+    <div id="moquu_wmaps"><a href="javascript:void(0)" class='moquu_wmaps'></a></div>
+    <a id="moquu_top" href="javascript:void(0)"></a>
+</div>
+<!--- header begin-->
+</block>
+
+<block name="header">
+<header id="pc-header">
+</block>
+<!-- 购物车顶部 -->
+    <div class="BHeader">
+        <div class="yNavIndex" style="margin-top: -5px">
+            <ul class="BHeaderl">
+                <empty name="Think.session.HomeUser">
+                    <li><a href="{:U('Login/login')}" style="color:#ea4949;">亲，请登录</a> </li>
+                    <li class="headerul">|</li>
+                    <li><a href="{:U('Login/register')}">免费注册</a> </li>
+                    <li class="headerul">|</li>
+                <else/>
+                    <li><span>欢迎您：{$Think.session.HomeUser.username}</span></li>
+                     <li><a href="{:U('Login/logout')}">退出登录</a> </li>
+                    <li class="headerul">|</li>
+                </empty>
+                <li id="pc-nav" class="menu"><a class="tit">我的商城</a>
+                    <div class="subnav">
+                        <a href="{:U('Order/order')}">我的订单</a>
+                        <a href="{:U('Collect/collect')}">我的收藏</a>
+                        <a href="{:U('Safe/safe')}">账户安全</a>
+                        <a href="{:U('Address/address')}">地址管理</a>
+                        <a href="{:U('Feedback/Feedback')}">意见反馈</a>
+                    </div>
+                </li>
+                <li class="headerul">|</li>
+                <li id="pc-nav1" class="menu"><a href="#" class="tit M-iphone">手机悦商城</a>
+                   <div class="subnav">
+                       <a href="#"><img src="__PUBLIC__/Home-icon/ewm.png" width="115" height="115" title="扫一扫，有惊喜！"></a>
+                   </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+<!-- 搜索框 -->
+<block name="search">
+    <empty name="seo">
+    <div class="container clearfix">
+        <div class="header-logo fl"><h1><a href="{:U('Index/index')}"><img src="__PUBLIC__/Upload/Home-icon/logo.png" style="width: 200px;height:110px"></a> </h1></div>
+<else />
+<foreach name="seo" item="v">
+    <div class="container clearfix">
+        <div class="header-logo fl"><h1><a href="{:U('Index/index')}">
+        <empty name="v['pic']">
+            <img src="__PUBLIC__/Home-icon/logo.png" style="width: 200px;height:100px">
+        <else />
+            <img src="__PUBLIC__/Upload/{$v['pic']}" style="width: 200px;height:100px">
+        </empty>
+        </a> </h1></div>
+</foreach>
+</empty>
+        <div class="head-form fl">
+        <!-- 搜索开始 -->
+            <form class="clearfix" action="{:U('Goods/index')}" method="get">
+                <input type="text" class="search-text" id="key" autocomplete="off" oninput="changeinput()"  placeholder="请输入要搜索的商品" name="search" value="{$search?$search:''}">
+                
+                <button class="button">搜索</button>
+            <div style="position:absolute;top:55px;z-index:1231231232;width:462px;height:200px;background-color:white;border: solid 2px #EA4949;display:none" id="sear">
+                <empty name="hotwords">
+                <else />
+                    <foreach name="hotwords" item="vo" key="k">
+                        <a href="{:U('Goods/index',['search'=>$k])}"><li style="height:30px;font-size: 14px"></li></a>
+                    </foreach>
+                </empty>
+            </div>
+            </form>
+        <!-- 搜索结束 -->
+            <empty name="hotwords">
+                <else />
+                <div class="words-text clearfix">
+                    <foreach name="hotwords" item="vo" key="k">
+                        <a href="{:U('Goods/index',['search'=>$k])}">{$k}</a>
+                    </foreach>
+                </div>
+            </empty>
+        </div>
+            <div class="dorpdown " id="settleup-2014"> 
+                <div class="cw-icon"> 
+                    <i class="ci-left"></i> 
+                    <i class="ci-right">&gt;</i>
+                    <i id="shopping-amount" class="ci-count">0</i> 
+                    <a href="{:U('ShopCar/shopcar')}" >我的购物车</a> 
+                </div> 
+                <div class="dorpdown-layer">
+                    <div class="spacer"></div>
+                    <div id="settleup-content">
+                        <div class="smt">
+                            <h4 class="fl">最新加入的商品</h4>
+                        </div>
+                        <div class="smc">
+                            <ul id="mcart-sigle"> 
+                            </ul>
+                        </div>
+                        <div class="smb ar">
+                            <div class="p-total">
+                                共
+                                <b>2</b>件商品　共计
+                                <strong>￥ 128.00</strong>
+                            </div>
+                            <a href="{:U('ShopCar/shopcar')}" id="btn-payforgoods" title="去购物车">去购物车</a>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+    </div>
+<script type="text/javascript">
+    function changeinput()
+    {
+        $("#sear").css('display','block');
+        var words = $("#key").val();
+
+        // alert(chi);
+        $.ajax({
+            type:'post',
+            url:"{:U('Goods/index')}",
+            data:{'words':words},
+            success:function(res){
+                console.log(res);
+                li = '';
+                for (var k in res.info) {
+                li+='<a href="{:U('Goods/index')}?search='+res.info[k]+'"><li style="height:30px;font-size: 14px">'+res.info[k]+'</li></a>';
+                }
+                $('#sear').empty().append(li);
+            }
+        })
+    }
+    $('body').on('click',function(){
+        $("#sear").css('display','none');
+
+    })
+    
+            $(function() {
+                $.ajax({
+                        type:'get',
+                        url:"{:U('ShopCar/shopcar')}",
+                        success:function(res){
+                            var li = '';
+                            var total = 0;
+                            var totalNum = 0;
+                            if(res.info) {
+                                for (var k in res.info) {
+                                    li += '<li idInfo="'+res.info[k].gid+'_'+res.info[k].id+'"><div class="p-img fl"><a href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html"><img width="50" height="50" alt="" src="__PUBLIC__/Uploads/'+res.info[k].pic+'" /></a></div><div class="p-name fl"><a title="'+res.info[k].name+res.info[k].attr+'"href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html">'+res.info[k].name+res.info[k].attr+'</a></div><div class="p-detail fr ar"><span class="p-price"><strong>￥'+res.info[k].price+'</strong>&times;'+res.info[k].buyNum+'</span><br /><a href="javascript:void(0)" data-type="RemoveProduct" data-id="1006559999" class="delete">删除</a></div></li>';
+                                    total += Number(res.info[k].buyNum);
+                                    totalNum += Number(res.info[k].buyNum * res.info[k].price)
+                                }
+                                $('#mcart-sigle').html(li);
+                                $('#shopping-amount').html(total);
+                                $('.p-total b').html(total);
+                                $('.p-total strong').html('￥'+totalNum);
+                            } else {
+                                var  div = '<div class="spacer"></div><div id="settleup-content"><div class="smt"><h4 class="fl">最新加入的商品</h4></div><div class="smc"><ul id="mcart-sigle"><li> 购物车中还没有商品，赶紧选购吧！</li></ul></div><div class="smb ar"><div class="p-total">共<b>0</b>件商品　共计<strong>￥ 0.00</strong></div><a href="{:U("ShopCar/shopcar")}" id="btn-payforgoods" title="去购物车">去购物车</a></div></div>';
+                                $('.dorpdown-layer').html(div);
+                            }
+                        }
+                    });
+
+                $('.cw-icon').hover(function() {
+                    $(this).addClass("hover");
+                    $.ajax({
+                        type:'get',
+                        url:"{:U('ShopCar/shopcar')}",
+                        success:function(res){
+                            var li = '';
+                            var total = 0;
+                            var totalNum = 0;
+                            if(res.info) {
+                                for (var k in res.info) {
+                                    li += '<li idInfo="'+res.info[k].gid+'_'+res.info[k].id+'"><div class="p-img fl"><a href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html"><img width="50" height="50" alt="" src="__PUBLIC__/Uploads/'+res.info[k].pic+'" /></a></div><div class="p-name fl"><a  title="'+res.info[k].name+res.info[k].attr+'" href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html">'+res.info[k].name+res.info[k].attr+'</a></div><div class="p-detail fr ar"><span class="p-price"><strong>￥'+res.info[k].price+'</strong>&times;'+res.info[k].buyNum+'</span><br /><a href="javascript:void(0)" data-type="RemoveProduct" data-id="1006559999" class="delete">删除</a></div></li>';
+                                    total += Number(res.info[k].buyNum);
+                                    totalNum += Number(res.info[k].buyNum * res.info[k].price)
+                                }
+                                $('#mcart-sigle').html(li);
+                                $('#shopping-amount').html(total);
+                                $('.p-total b').html(total);
+                                $('.p-total strong').html('￥'+totalNum);
+                            } else {
+                                var  div = '<div class="spacer"></div><div id="settleup-content"><div class="smt"><h4 class="fl">最新加入的商品</h4></div><div class="smc"><ul id="mcart-sigle"><li> 购物车中还没有商品，赶紧选购吧！</li></ul></div><div class="smb ar"><div class="p-total">共<b>0</b>件商品　共计<strong>￥ 0.00</strong></div><a href="{:U("ShopCar/shopcar")}" id="btn-payforgoods" title="去购物车">去购物车</a></div></div>';
+                                $('.dorpdown-layer').html(div);
+                                $('#shopping-amount').html(total);
+                            }
+                        }
+                    });
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+            $('body').on('click','.delete',function(){
+                var idInfo = $($(this).parent().parent().get()[0]).attr('idInfo');
+                $.ajax({
+                    type:'get',
+                    url:"{:U('ShopCar/del')}",
+                    data:{'idInfo':idInfo},
+                    success:function(res) {
+                        $.ajax({
+                            type:'get',
+                            url:"{:U('ShopCar/shopcar')}",
+                            success:function(res){
+                                var li = '';
+                                var total = 0;
+                                var totalNum = 0;
+                                if(res.info) {
+                                    for (var k in res.info) {
+                                        li += '<li idInfo="'+res.info[k].gid+'_'+res.info[k].id+'"><div class="p-img fl"><a href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html"><img width="50" height="50" alt="" src="__PUBLIC__/Uploads/'+res.info[k].pic+'" /></a></div><div class="p-name fl"><a  title="'+res.info[k].name+res.info[k].attr+'" href="__MODULE__/Goods/detail/id/'+res.info[k].gid+'.html">'+res.info[k].name+res.info[k].attr+'</a></div><div class="p-detail fr ar"><span class="p-price"><strong>￥'+res.info[k].price+'</strong>&times;'+res.info[k].buyNum+'</span><br /><a href="javascript:void(0)" data-type="RemoveProduct" data-id="1006559999" class="delete">删除</a></div></li>';
+                                        total += Number(res.info[k].buyNum);
+                                        totalNum += Number(res.info[k].buyNum * res.info[k].price)
+                                    }
+                                    $('#mcart-sigle').html(li);
+                                    $('#shopping-amount').html(total);
+                                    $('.p-total b').html(total);
+                                    $('.p-total strong').html('￥'+totalNum);
+                                } else {
+                                    var  div = '<div class="spacer"></div><div id="settleup-content"><div class="smt"><h4 class="fl">最新加入的商品</h4></div><div class="smc"><ul id="mcart-sigle"><li> 购物车中还没有商品，赶紧选购吧！</li></ul></div><div class="smb ar"><div class="p-total">共<b>0</b>件商品　共计<strong>￥ 0.00</strong></div><a id="btn-payforgoods" title="去购物车">去购物车</a></div></div>';
+                                    $('.dorpdown-layer').html(div);
+                                    $('#shopping-amount').html(0);
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+</script>
+</block>
+<block name="main">
+    <div class="yHeader">                                    
+        <div class="yNavIndex">
+            <div class="pullDown">
+                <h2 class="pullDownTitle">
+                    全部商品分类
+                </h2>
+                <ul class="pullDownList">
+                    <foreach name="type" item="vo">
+                        <li class="menulihover" tid="{$vo['id']}">
+                            <i class="listi1"></i>
+                            <a href="__MODULE__/Goods/index/id/{$vo['id']}">{$vo['name']}</a>
+                            <span></span>
+                        </li>          
+                    </foreach>
+                </ul>
+                <div class="yMenuListCon">
+                    <div class="yMenuListConin">
+                        <div class="yMenuLCinLisi fl">
+                            <ul class="type">
+                                
+                            </ul>
+                        </div>
+                        <div class="yMenuLCinList fl">
+                            <div class="fuck">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <script>
+
+                var arr = [];
+                // ajax请求首页分类
+                var timer = null;
+
+                //当鼠标进入顶级分类时
+                $('.menulihover').hover(
+                    function(){
+                    //清除定时器
+                    clearTimeout(timer);
+                    $('.yMenuListConin').fadeIn('slow').css('display','block');
+                        var tid = $(this).attr('tid');
+                        // //当数组里有缓存时直接调用函数
+                        if(arr[tid]){  
+                            type(arr[tid]);
+                        } else {
+                            //第一次请求ajax
+                            $.ajax({
+                                url:'{:U("getType")}',
+                                data:{'tid':tid},
+                                success:function(res){
+                                    arr[tid] = res;
+                                    type(res);
+                                }
+                            });
+                        }
+                    },
+                    function(){
+                        //当鼠标离开顶级分类时,设置一个定时器，延迟消失
+                        timer = setTimeout(function(){
+                            $('.yMenuListConin').fadeOut('slow').css('display','none');
+                        },500)
+                    }
+                );
+
+                //当鼠标进入二级分类时
+                $('.yMenuListConin').hover(
+                    function(){
+                        //清除定时器
+                        clearTimeout(timer);
+                        $('.yMenuListConin').fadeIn('slow').css('display','block');
+
+                    },function(){
+                        //设置定时器，延迟消失
+                        timer = setTimeout(function(){
+                            $('.yMenuListConin').fadeOut('slow').css('display','none');
+                        },500);
+                });
+
+                function type(res){
+                    $('.type li').remove();
+                    $('.third').remove();
+                    for(var i in res[0]){
+                        if(i < res[0].length){
+                            $('.type').append('<li><a href="__MODULE__/Goods/index/id/'+res[0][i]['id']+'">'+res[0][i].name+'<i class="fr">></i></a></li>');
+                        }
+                        $('.fuck').append('<p class="third third'+i+'"></p>');
+                        for(var l in res[1][i]){
+
+                            $('.third'+i+'').append('<a href="__MODULE__/Goods/index/id/'+res[1][i][l].id+'">'+res[1][i][l].name+'</a>');
+                        }
+                    }
+                }
+            </script>
+        </div>
+            <ul class="yMenuIndex">
+                <li><a href="" target="_blank">服装城</a></li>
+                <li><a href="" target="_blank">美妆馆</a></li>
+                <li><a href="" target="_blank">美食</a></li>
+                <li><a href="" target="_blank">全球购</a></li>
+                <li><a href="" target="_blank">闪购</a></li>
+                <li><a href="" target="_blank">团购</a></li>
+                <li><a href="" target="_blank">拍卖</a></li>
+                <li><a href="" target="_blank">金融</a></li>
+                <li><a href="" target="_blank">智能</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- header End -->
+
+<!--- banner begin-->
+<section id="pc-banner">
+    <div class="yBanner">
+        <div class="banner" id="banner" >
+        <foreach name="banner" item="v">
+            <a href="{:U('Goods/detail', ['id' => $v['gid']])}" class="d1" style="background:url(__PUBLIC__/Uploads/{$v['pic']}) center no-repeat;background-color: #f01a38;background-size: 1000px 470px;padding-left:180px;" target="_blank"></a>
+        </foreach>
+            <div class="d2" id="banner_id">
+                <ul>
+                <foreach name="banner" item="v">
+                    <li></li>
+                </foreach>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center;clear:both"></div>
+    </div>
+</section>
+<!-- banner End -->
+
+<!--- advert begin-->
+<section id="pc-advert">
+    <div class="container-c clearfix">
+        <a href="page.html" target="_blank"><img src="__PUBLIC__/Home-img/pd/pd1.png"></a>
+        <a href="page.html" target="_blank"><img src="__PUBLIC__/Home-img/pd/pd2.png"></a>
+        <a href="page.html" target="_blank"><img src="__PUBLIC__/Home-img/pd/pd3.png"></a>
+        <a href="page.html" target="_blank"><img src="__PUBLIC__/Home-img/pd/pd4.png"></a>
+    </div>
+</section>
+<!-- advert End -->
+
+<!-- 商城资讯 begin -->
+<section id="pc-information">
+    <div class="containers">
+        <div class="pc-info-mess  clearfix" style="position: relative;">
+            <h2 class="fl" style="margin-right:20px;">商城快讯</h2>
+            <div id="MarqueeDiv" class="MarqueeDiv">
+                <a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
+                <a href="new.html">[特惠]洗护节 跨品牌满199减100</a>
+                <a href="new.html">[特惠]仁怀政府开启“仁怀酱香酒馆”</a>
+                <a href="new.html">[特惠]洗护节 跨品牌满199减100</a>
+                <a href="new.html">逛商城赚话费，商城通信51城全线抢购 </a>
+            	<a href="new.html">文艺蓝牙音箱 火热众筹中 </a>
+            	<a href="new.html">[公告]第1000家商城帮服务店落户遵义</a>
+            	<a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
+            	<a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
+            	<a href="new.html">[特惠]新一代Moto 360智能手表登陆</a>
+            </div>
+            <a href="new.html" style="position: absolute;right: 15px;top: 0;"> 更多资讯</a>
+        </div>
+    </div>
+</section>
+<!-- 商城资讯 End -->
+
+<!-- 限时抢购 begin -->
+<div class="time-lists clearfix">
+    <div class="time-list fl" style="width:100%">
+        <div class="time-title">
+            <h2>即将开始抢购</h2>
+            <a href="{:U('Goods/sale')}" class="fr">更多抢购商品</a>
+        </div>
+        <div class="time-border" style="height:320px">
+            <div class="yScrollList" style="width:100%;height:100%">
+                <div class="yScrollListIn">
+                    <div class="yScrollListInList yScrollListInList1 jCarouselLite" style="display:block;margin-left: 20px;width: 1000px;height:295px" id="demo-01">
+                        <ul class="my_ul" style="height:295px;width: 1000px;">
+                            <li  style="float:left;width:100%;height:100%;text-align: center"><img style="margin: auto;" src="__PUBLIC__/Uploads/scroll.gif"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 限时抢购 End -->
+
+<!-- 卖场推荐 begin -->
+<div class="container-c time-lists clearfix randpic">
+    <div style="border:1px solid lightgray;text-align:center;height:243px;line-height: 243px">
+        <img style="margin: auto;" src="__PUBLIC__/Uploads/scroll.gif">
+    </div>
+</div>
+<!-- 卖场推荐 End -->
+
+<div class="time-lists clearfix">
+    <div class="time-list time-list-w fl">
+        <div class="time-title time-clear"><h2>热卖区</h2><div class="pc-font fl"></div><a class="pc-spin fr" href="javascript:;" demo="hotbuy" page="2" onClick="change(this)">换一换</a> </div>
+        <div class="time-border hotbuy" style="text-align:center;line-height:300px">
+            <img src="__PUBLIC__/Uploads/scroll.gif">
+        </div>
+    </div>
+</div>
+
+<div class="containers main-banner"><a href="#"><img src="__PUBLIC__/Home-img/ad/br1.jpg" width="1200" height="105"></a> </div>
+
+<div class="time-lists  clearfix">
+    <div class="time-list time-list-w fl">
+        <div class="time-title time-clear-f"><h2>男装</h2>
+            <ul class="brand-tab H-table clearfix fr" id="H-table">
+                <volist name="son" id="vo" offset="0" length="1">
+                <li class="cur"><a tid="{$vo['id']}">{$vo['name']}</a></li>
+                </volist>
+                <volist name="son" id="vo" offset="1">
+                <li><a tid="{$vo['id']}">{$vo['name']}</a></li>
+                </volist>
+            </ul>
+        </div>
+        <div class="time-border time-border-h clearfix">
+            <div class="brand-img fl">
+                <ul class="pic">
+                    <for start="1" end="7">
+                        <li><a><img src="__PUBLIC__/Uploads/scroll.gif" width="125" height="47"></a></li>
+                    </for>
+                </ul>
+            </div>
+            <div class="brand-bar fl"><a href="#"><img src="__PUBLIC__/Home-img/ad/bar.png" width="300" height="476"></a> </div>
+            <div class="brand-poa fl">
+                <div>
+                    <ul class="goods">
+                        <for start="1" end="7">
+                           <li>
+                                <div class="brand-imgss" style="text-align:center">
+                                    <a href="">
+                                        <img src="__PUBLIC__/Uploads/scroll.gif" style="width:180px;height:165px">
+                                    </a>
+                                </div>
+                                <div class="brand-title" style="text-align:center">     <a>加载中</a>
+                                </div>
+                                <div class="brand-price" style="text-align:center">
+                                    ~~~~~
+                                </div>
+                            </li>
+                        </for>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <script>
+                var arr = [];
+                var timer = null;
+                $('#H-table a').click(function(){
+                    //获取子分类的ID
+                   var tid = $(this).attr('tid');
+                   $(this).parent().addClass('cur');
+                   $(this).parent().siblings().removeClass();
+                   readys();
+                   if(arr[tid]){
+                        GAB(arr[tid]);
+                   } else {
+                    timer = setTimeout(function(){
+                       $.ajax({
+                            url:'{:U("getBrand")}',
+                            data:{'tid':tid},
+                            success:function(res){
+                                arr[tid] = res;
+                                GAB(res);
+                            }
+                       });
+                    },1000);
+                   }
+                });
+                function GAB(res){
+                    for(var i in res.bras){
+                          if(i<6){
+                            $('.pic').children().eq(i).html('<a><img src="__PUBLIC__/Uploads/'+res.bras[i].pic+'" width="125" height="47"></a>');
+                        }
+                    }
+                    for(var b in res.goods){
+                        if(b<6){
+                            $('.goods').children().eq(b).html('<div class="brand-imgss" style="text-align:center"><a href="{:U("Goods/detail")}?id='+res.goods[b].id+'"><img src="__PUBLIC__/Uploads/'+res.goods[b].pic+'" style="width:180px;height:165px"></a></div><div class="brand-title" style="text-align:center"><a href="{:U("Goods/detail")}?id='+res.goods[b].id+'">'+res.goods[b].name+'</a> </div><div class="brand-price" style="text-align:center">￥'+res.goods[b].price+'</div>');
+                        }
+                    }
+                }
+                //加载时 
+                var mark = true;
+                $(window).bind('scroll',function(){
+
+                    if( $(document).scrollTop() + $(window).height() > $(document).height() - 1700){
+                        if(mark){
+                            loads();
+                        }
+                    }
+
+                })
+            //滚动加载男装下的数据
+            function loads(){
+                //获取子分类的ID
+               var tid = $('.cur a').attr('tid');
+               $.ajax({
+                    url:'{:U("getBrand")}',
+                    data:{'tid':tid},
+                    success:function(res){
+                        GAB(res);
+                    }
+               });
+               mark = false;
+            }
+            //准备加载节点
+            function readys(){
+                $('.pic').html('<for start="1" end="7"><li><a><img src="__PUBLIC__/Uploads/scroll.gif" width="125" height="47"></a></li></for>');
+                $('.goods').html('<for start="1" end="7"><li><div class="brand-imgss" style="text-align:center"><a href=""><img src="__PUBLIC__/Uploads/scroll.gif" style="width:180px;height:165px"></a></div><div class="brand-title" style="text-align:center">     <a>加载中</a></div><div class="brand-price" style="text-align:center">~~~~~</div></li></for>');
+            }
+            </script>
+    </div>
+</div>
+
+<div class="time-lists  clearfix">
+    <div class="time-list time-list-w fl">
+        <div class="time-title time-clear-f2"><h2>女装</h2>
+            <ul class="brand-tab H-table1 clearfix fr" id="H-table1">
+                <volist name="girl" id="vo" offset="0" length="1">
+                    <li class="cur"><a tid="{$vo['id']}">{$vo['name']}</a></li>
+                </volist>
+                <volist name="girl" id="vo" offset="1">
+                    <li><a tid="{$vo['id']}">{$vo['name']}</a></li>
+                </volist>
+            </ul>
+        </div>
+        <div class="time-border time-border-h clearfix">
+            <div class="brand-img fl">
+                <ul class="pic1">
+                    <for start="1" end="7">
+                     <li><a><img src="__PUBLIC__/Uploads/scroll.gif" width="125" height="47"></a></li>
+                </for>
+                </ul>
+            </div>
+            <div class="brand-bar fl"><a href="#"><img src="__PUBLIC__/Home-img/ad/bar1.png" width="300" height="476"></a> </div>
+            <div class="brand-poa fl">
+                <div>
+                    <ul class="girl1">
+                        <for start="1" end="7">
+                           <li>
+                                <div class="brand-imgss" style="text-align:center">
+                                    <a href="">
+                                        <img src="__PUBLIC__/Uploads/scroll.gif" style="width:180px;height:165px">
+                                    </a>
+                                </div>
+                                <div class="brand-title" style="text-align:center"><a>加载中</a>
+                                </div>
+                                <div class="brand-price" style="text-align:center">
+                                    ~~~~~
+                                </div>
+                            </li>
+                        </for>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+            var arrs = [];
+            var timer2 = null;
+             $('#H-table1 a').click(function(){
+                var tid = $(this).attr('tid');
+                $(this).parent().addClass('cur');
+                $(this).parent().siblings().removeClass();
+                readyGirls();
+                if(arrs[tid]){
+                    gabs(arrs[tid]);
+                } else {
+                    //获取子分类的ID
+                    timer2 = setTimeout(function(){
+                       $.ajax({
+                            url:'{:U("getBrand")}',
+                            data:{'tid':tid},
+                            success:function(res){
+                                arrs[tid] = res;
+                                gabs(res);
+                            }
+                       });
+                    },1000);
+                }
+            });
+             function gabs(res){
+                for(var i in res.bras){
+                      if(i<6){
+                        $('.pic1').children().eq(i).html('<a><img src="__PUBLIC__/Uploads/'+res.bras[i].pic+'" width="125" height="47"></a>');
+                        }
+                }
+                for(var b in res.goods){
+                    if(b<6){ 
+                        $('.girl1').children().eq(b).html('<div class="brand-imgss" style="text-align:center"><a href="{:U("Goods/detail")}?id='+res.goods[b].id+'"><img src="__PUBLIC__/Uploads/'+res.goods[b].pic+'" style="width:180px;height:165px"></a></div><div class="brand-title" style="text-align:center"><a href="{:U("Goods/detail")}?id='+res.goods[b].id+'">'+res.goods[b].name+'</a> </div><div class="brand-price" style="text-align:center">￥'+res.goods[b].price+'</div>');
+                    }
+                }
+             }
+             var mark2 = true;
+             $(window).bind('scroll',function(){
+                    // console.log($(document).scrollTop()+$(window).height());
+                    // console.log($(document).height() - 1300);
+                    if( $(document).scrollTop() + $(window).height() > $(document).height() - 1300){
+                        if(mark2){
+                            load2();
+                        }
+                    }
+
+            });
+            //页面加载时
+            function load2(){
+                    //获取子分类的ID
+                   var tid = $('#H-table1 .cur a').attr('tid');
+                   $.ajax({
+                        url:'{:U("getBrand")}',
+                        data:{'tid':tid},
+                        success:function(res){
+                            gabs(res);
+                        }
+                   });
+                   mark2 = false;
+            }
+                //准备加载节点
+            function readyGirls(){
+                $('.pic1').html('<for start="1" end="7"><li><a><img src="__PUBLIC__/Uploads/scroll.gif" width="125" height="47"></a></li></for>');
+                $('.girl1').html('<for start="1" end="7"><li><div class="brand-imgss" style="text-align:center"><a href=""><img src="__PUBLIC__/Uploads/scroll.gif" style="width:180px;height:165px"></a></div><div class="brand-title" style="text-align:center"><a>加载中</a></div><div class="brand-price" style="text-align:center">~~~~~</div></li></for>');
+            }
+        </script>
+</div>
+
+<div class="containers main-banner"><a href="#"><img src="__PUBLIC__/Home-img/ad/br1.jpg" width="1200" height="105"></a> </div>
+<section>
+    <div class="time-lists clearfix">
+        <div class="time-list time-list-w fl">
+            <div class="time-title time-clear"><h2>悦帮派</h2></div>
+            <div class="time-border time-border-h clearfix">
+                <div class="fl shop-img">
+                    <div class="shop-hgou"><h3>新手上路</h3></div>
+                    <div class="shop-help clearfix">
+                        <ul>
+                            <li><a href="#">开店指南</a> </li>
+                            <li><a href="#">购物流程</a> </li>
+                            <li><a href="#">交易安全</a> </li>
+                            <li><a href="#">常见问题</a> </li>
+                            <li><a href="#">联系客服</a> </li>
+                            <li><a href="#">用户协议</a> </li>
+                        </ul>
+                    </div>
+                    <div class="shop-re"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop5.png"></a> </div>
+                </div>
+                <div class="shop-bar shop-bar-w clearfix fl">
+                    <div class="shop-dan clearfix"><h3 class="fl">悦用户晒单</h3> <a href="#" class="fr">更多晒单</a> </div>
+                    <div class="clearfix" style="width:980px;">
+                        <div class="shop-fl fl">
+                            <div class="shop-work clearfix"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop2.png"></a><a href="#"><img src="__PUBLIC__/Home-img/ad/shop3.png"></a> </div>
+                            <div class="clearfix"><div class="shop-name fl"><a href="#"><img src="__PUBLIC__/Home-icon/shop-user.png"></a></div><div class=" fl"><p>搜悦用户</p> <p>2015-5-24 <em>11:25</em></p> </div></div>
+                            <div class="shop-sun"><p>晒单内容:</p> <p>物美价廉，挺好的，物流超快.很不错，下次继续来</p> <p class="shop-see"><a href="#">查看商品</a> </p> </div>
+                        </div>
+                        <div class="shop-fl fl">
+                            <div class="shop-work clearfix"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop2.png"></a><a href="#"><img src="__PUBLIC__/Home-img/ad/shop3.png"></a> </div>
+                            <div class="clearfix"><div class="shop-name fl"><a href="#"><img src="__PUBLIC__/Home-icon/shop-user.png"></a></div><div class=" fl"><p>搜悦用户</p> <p>2015-5-24 <em>11:25</em></p> </div></div>
+                            <div class="shop-sun"><p>晒单内容:</p> <p>物美价廉，挺好的，物流超快.很不错，下次继续来</p> <p class="shop-see"><a href="#">查看商品</a> </p> </div>
+                        </div>
+                        <div class="shop-fl fl">
+                            <div class="shop-work clearfix"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop2.png"></a><a href="#"><img src="__PUBLIC__/Home-img/ad/shop3.png"></a> </div>
+                            <div class="clearfix"><div class="shop-name fl"><a href="#"><img src="__PUBLIC__/Home-icon/shop-user.png"></a></div><div class=" fl"><p>搜悦用户</p> <p>2015-5-24 <em>11:25</em></p> </div></div>
+                            <div class="shop-sun"><p>晒单内容:</p> <p>物美价廉，挺好的，物流超快.很不错，下次继续来</p> <p class="shop-see"><a href="#">查看商品</a> </p> </div>
+                        </div>
+                        <div class="shop-fl fl">
+                            <div class="shop-work clearfix"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop2.png"></a><a href="#"><img src="__PUBLIC__/Home-img/ad/shop3.png"></a> </div>
+                            <div class="clearfix"><div class="shop-name fl"><a href="#"><img src="__PUBLIC__/Home-icon/shop-user.png"></a></div><div class=" fl"><p>搜悦用户</p> <p>2015-5-24 <em>11:25</em></p> </div></div>
+                            <div class="shop-sun"><p>晒单内容:</p> <p>物美价廉，挺好的，物流超快.很不错，下次继续来</p> <p class="shop-see"><a href="#">查看商品</a> </p> </div>
+                        </div>
+                        <div class="shop-fl fl">
+                            <div class="shop-work clearfix"><a href="#"><img src="__PUBLIC__/Home-img/ad/shop2.png"></a><a href="#"><img src="__PUBLIC__/Home-img/ad/shop3.png"></a> </div>
+                            <div class="clearfix"><div class="shop-name fl"><a href="#"><img src="__PUBLIC__/Home-icon/shop-user.png"></a></div><div class=" fl"><p>搜悦用户</p> <p>2015-5-24 <em>11:25</em></p> </div></div>
+                            <div class="shop-sun"><p>晒单内容:</p> <p>物美价廉，挺好的，物流超快.很不错，下次继续来</p> <p class="shop-see"><a href="#">查看商品</a> </p> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</block>
+<div class="aui-footer-bot">
+    <div class="time-lists aui-footer-pd clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="__PUBLIC__/Home-icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="__PUBLIC__/Home-icon/icon-d2.png"></span>
+                <em>新手上路</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="__PUBLIC__/Home-icon/icon-d3.png"></span>
+                <em>保障正品</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>
+                <span><img src="__PUBLIC__/Home-icon/icon-d1.png"></span>
+                <em>消费者权益</em>
+            </h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #dedede"></div>
+    <div class="time-lists aui-footer-pd time-lists-ls clearfix">
+        <div class="aui-footer-list clearfix">
+            <h4>购物指南</h4>
+            <ul>
+                <li><a href="#">保障范围 </a> </li>
+                <li><a href="#">购物流程</a> </li>
+                <li><a href="#">会员介绍 </a> </li>
+                <li><a href="#">生活旅行</a> </li>
+                <li><a href="#"> 常见问题 </a> </li>
+                <li><a href="#"> 联系客服购物指南 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>特色服务</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>帮助中心</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+        <div class="aui-footer-list clearfix">
+            <h4>新手指导</h4>
+            <ul>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">退货退款流程</a> </li>
+                <li><a href="#">服务中心 </a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#">服务中心</a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+                <li><a href="#"> 更多特色服务 </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<block name="link">
+    <div class="link">
+    <empty name="list">
+    <else/>
+    <h1 style="margin:0 auto;text-align:center">友情链接</h1>
+        <ul >
+            <foreach name="list" item="vo">
+                <li ><a href="{$vo.url}" class="grayscale" target="_blank"><img src="__PUBLIC__/Upload/{$vo.pic}" alt="{$vo.name}" width="140"></a></li>
+            </foreach>
+        </ul>
+    </empty>
+    </div>
+</block>
+<block name="js">
+<script>
+$('.my_li').map(function() {
+    // console.log(this);
+    timer(this, $(this).attr('time'));
+});
+function timer(obj, intDiff){
+    // console.log();
+    $(obj).attr('new_time', window.setInterval(function(){
+         var day=0,
+                 hour=0,
+                 minute=0,
+                 second=0;//时间默认值
+         if(intDiff > 0){
+             day = Math.floor(intDiff / (60 * 60 * 24));
+             hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+             minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+             second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+         }
+         if (minute <= 9) minute = '0' + minute;
+         if (second <= 9) second = '0' + second;
+         // console.log($(obj).children());
+         $(obj).children().eq(0).children().children().eq(0).html('<s id="h"></s>'+hour+'');
+         $(obj).children().eq(0).children().children().eq(2).html('<s></s>'+minute+'');
+         $(obj).children().eq(0).children().children().eq(4).html('<s></s>'+second+'');
+         intDiff--;
+        if(intDiff <= 0)
+        {
+            $(obj).children().eq(0).children().empty().append('<span style="display:inline-block;width:135px;height:32px;text-align:center;line-height:32px;border-radius:5px;color:#FFF;background-color:gray">开始抢购</span>');
+            clearInterval($(obj).attr('new_time'));  
+        }  
+     }, 1000));
+}
+
+var scroll = null;
+$($(window).scroll(function() {
+    
+    // console.log($(document).height());
+    if($(window).scrollTop() > 700)
+    {
+        if(!$('.my_ul').attr('data'))
+        {
+            clearTimeout(scroll);
+            scroll = setTimeout(function(){
+               $.ajax({
+                    url:'{:U("index")}',
+                    type:'get',
+                    data:{
+                        model:'hotsale'
+                    },
+                    success:function(data)
+                    {
+                        var hotsale = '';
+                        console.log('ajax请求限时抢购数据');
+                        $('.hotbuy').empty();
+                        $('.my_ul').empty();
+                        $('.randpic').empty();
+                        // $('.time-poued').empty();
+                        // $('.news-right').empty();
+                        $(data.data).map(function() {
+                            hotsale += '<li time="' + this.addtime + '" class="my_li"><div class="time-title time-clear"><div class="time-item pc-time-item fl clearfix"><strong class="hour_show">00</strong><strong class="pc-clear-sr">:</strong><strong class="minute_show">00</strong><strong class="pc-clear-sr">:</strong><strong class="second_show">00</strong></div></div><a href="__MODULE__/Goods/detail/id/' + this.id + '" target="_blank"><img src="__PUBLIC__/Uploads/' + this.pic + '"><p class="head-name">' + this.name + '</p><p><span class="price">￥' + this.price + '</span><span class="discount">￥'+ this.normalprice + '</span></p><p class="label-default">3折</p></a></li>';
+                        });
+
+                        var pics = '<div class="time-list fl"><div class="time-title time-clear"><h2>卖场推荐</h2><a href="javascript:;" class="pc-spin fr" demo="pics" onClick="change(this)">换一换</a> </div><div class="time-poued clearfix my_pics">';
+                        
+                        $(data.pics).map(function() {
+                            pics += '<a href="__MODULE__/Goods/detail/id/' + this.id + '"><img style="width:224px;height:243px"  src="__PUBLIC__/Uploads/' + this.pic + '"></a>';
+                        });
+                        pics += '</div></div><div class="news-list fr"><div class="time-title time-clear"><h2>今日值得购买</h2></div><div class="news-right"><a href="__MODULE__/Goods/detail/id/' + data.bigpic.id + '"><img style="width:306px;height:243px;" src="__PUBLIC__/Uploads/' + data.bigpic.pic + '"></a></div></div>';
+
+                        var hotbuy = '<div class="yScrollList"><div class="yScrollListIn"><div style="display:block;" class="yScrollListInList yScrollListInList1"><ul class="change_hotbuy">';
+                        $(data.hotbuy).map(function() {
+                            hotbuy += '<li><a href="__MODULE__/Goods/detail/id/' + this.id + '"><img src="__PUBLIC__/Uploads/' + this.pic + '"><p class="head-name pc-pa10">' + this.name + '</p></a></li>';
+                        });
+                        hotbuy += '</ul></div></div></div>';
+
+                        // $('.news-right').append($bigpic);
+                        // $('.time-poued').append(pics);
+                        $('.hotbuy').append(hotbuy);
+                        $('.randpic').append(pics);
+                        $('.my_ul').append(hotsale);
+                        $('.my_ul').attr('data', true);
+                        $('.my_li').map(function() {
+                            // console.log(this);
+                            timer(this, $(this).attr('time'));
+                        });
+
+                    }
+                }); 
+            }, 300);
+        }
+    }
+}));
+
+/*********点击改变商品图片*********/
+function change(obj)
+{
+    var demo = $(obj).attr('demo');
+    var page = $(obj).attr('page');
+    $.ajax({
+        url:'{:U("index")}',
+        type:'get',
+        data:{
+            p:page,
+            demo:demo,
+            model:'hotsale'
+        },
+        success:function (data)
+        {
+            if(demo == 'hotbuy')
+            {
+                var div = '';
+                $('.change_hotbuy').empty();
+                $(obj).attr('page', data.page);
+                $(data.hotbuy).map(function() {
+                    div += '<li><a href="__MODULE__/Goods/detail/id/' + this.id + '"><img src="__PUBLIC__/Uploads/' + this.pic + '"><p class="head-name pc-pa10">' + this.name + '</p></a></li>';
+                });
+                $('.change_hotbuy').append(div);
+            } else {
+                var div = '';
+                $('.my_pics').empty();
+                $(data.pics).map(function() {
+                    div += '<a href="__MODULE__/Goods/detail/id/' + this.id + '"><img style="width:224px;height:243px"  src="__PUBLIC__/Uploads/' + this.pic + '"></a>';
+                });
+                $('.my_pics').append(div);
+            }
+        }
+    });
+}
+</script>
+</block>
+<script type="text/javascript">banner()</script>
+</body>
+</html>
+

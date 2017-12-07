@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="__PUBLIC__/Admin/css/shop.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/Admin/skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
+<link href="__PUBLIC__/Admin/css/Sellerber.css" type="text/css"  rel="stylesheet" />
+<link href="__PUBLIC__/Admin/css/bkg_ui.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/Admin/font/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/Admin/js/jquery-1.9.1.min.js" type="text/javascript" ></script>
+<script src="__PUBLIC__/Admin/js/layer/layer.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Admin/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Admin/js/Sellerber.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Admin/js/shopFrame.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Admin/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.cookie.js"></script> 
+<block name="header"></block>
+<title>高大上后台管理</title>
+</head>
+<!--[if lt IE 9]>
+  <script src="__PUBLIC__/Admin/js/html5shiv.js"></script>
+  <script src="__PUBLIC__/Admin/js/respond.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/Admin/js/PIE/PIE_IE678.js"></script>
+ <![endif]-->
+<block name="main">
+<body style="overflow: auto;">
+ <div class="Sellerber" id="Sellerber">
+ <!--顶部-->
+  <div class="Sellerber_header apex clearfix" id="Sellerber_header">
+   <div class="l_f logo"><img src="__PUBLIC__/Admin/images/logo_03.png" /></div>
+   <div class="r_f Columns_top clearfix" style="width:310px">
+   <!--<div class="time_style"><i class="fa  fa-clock-o"></i><span id="time"></span></div>-->
+   <div style="visibility: hidden;" class="news l_f"><a href="#" class="fa  fa-bell "></a><em>5</em></div>
+     <div class="administrator l_f">
+       <img src="__PUBLIC__/Admin/images/avatar.png"  width="36px"/><span class="user-info">欢迎你,{$Think.session.AdminUser.username}</span><i class="glyph-icon fa  fa-caret-down"></i>
+       <ul class="dropdown-menu">
+       <li><a target="iframepage" href="{:U('User/personal')}" name="{:U('User/personal')}" class="iframeurl"><i class="fa fa-user"></i>个人信息</a></li>
+        <li><a href="{:U('Login/logout')}" id="Exit_system"><i class="fa fa-user-times"></i>退出</a></li>
+       </ul>
+     </div>
+   </div>
+  </div>
+<!--左侧-->
+  <div class="Sellerber_left menu" id="menuBar">
+    <div class="show_btn" id="rightArrow"><span></span></div>
+    <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div>
+    <div class="menu_style" id="menu_style">
+    <div class="list_content">
+     <div class="search_style">
+        
+     </div> 
+
+    <dl class="nav nav-list" id="menu_list">
+     <dt class="shop_index nav_link " ><a href="{:U('x_index')}" target="iframepage" name="index.html" class="iframeurl" title=""><i class="fa fa-home"></i><span class="menu-text">商城首页</span></a></dt>
+     <dd class="submenu" style="height:0px; border:0px;"></dd>
+
+     <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa fa-users"></i><span class="menu-text">用户管理</span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('User/index')}" title="用户列表" class="iframeurl"><i class="fa fa-angle-double-right"></i>用户列表</a></li>
+       <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('User/manager')}" title="用户列表" class="iframeurl"><i class="fa fa-angle-double-right"></i>管理员列表</a></li>
+       <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('User/add')}" title="添加用户" class="iframeurl"><i class="fa fa-angle-double-right"></i>添加管理员</a></li>
+       </ul>
+      </dd>
+
+
+     <dt class="nav_link ">
+     <a href="javascript:void(0)" class="dropdown-toggle title_nav"><i class="fa fa-desktop"></i><span class="menu-text"> 商品管理 </span><b class="arrow fa fa-angle-down"></b></a>
+     </dt>
+     <dd class="submenu">
+       <ul>
+         <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('Goods/index')}" title="产品类表" class="iframeurl"><i class="fa fa-angle-double-right"></i>产品管理</a></li>
+         <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('Brand/index')}" title="品牌管理" class="iframeurl"><i class="fa fa-angle-double-right"></i>品牌管理</a></li>
+         <li class="home"><a href="javascript:void(0)" target="iframepage" name="{:U('Type/index')}" title="分类管理" class="iframeurl"><i class="fa fa-angle-double-right"></i>分类管理</a></li>
+         </ul>
+         </dd>
+ <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa fa-database"></i><span class="menu-text"> 订单管理 </span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" name="{:U('Order/index')}" title="订单列表" class="iframeurl" target="iframepage"><i class="fa fa-angle-double-right"></i>订单列表</a></li>
+       </ul>
+      </dd>
+       
+      <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa  fa-file-photo-o"></i><span class="menu-text"> 广告管理 </span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" name="{:U('Ads/index')}" title="广告列表" class="iframeurl"><i class="fa fa-angle-double-right"></i>广告列表</a></li>
+       <li class="home"><a href="javascript:void(0)" name="{:U('Ads/add')}" title="分类管理" class="iframeurl"><i class="fa fa-angle-double-right"></i>增加广告</a></li>
+       </ul>
+      </dd>
+      <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa  fa-file-photo-o"></i><span class="menu-text">友情链接管理 </span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" name="{:U('FriendShip/index')}" title="友情链接列表" class="iframeurl"><i class="fa fa-angle-double-right"></i>友情链接列表</a></li>
+       <li class="home"><a href="javascript:void(0)" name="{:U('FriendShip/add')}" title="添加友链" class="iframeurl"><i class="fa fa-angle-double-right"></i>添加友链</a></li>
+       </ul>
+      </dd>
+    <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa  fa-file-photo-o"></i><span class="menu-text">站点管理 </span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" name="{:U('IndexSeo/index')}" title="修改seo信息" class="iframeurl"><i class="fa fa-angle-double-right"></i>修改seo信息</a></li>
+       </ul>
+      </dd>
+      <dt class="nav_link"><a href="#" class="dropdown-toggle title_nav"><i class="fa  fa-file-photo-o"></i><span class="menu-text">意见反馈管理 </span><b class="arrow fa fa-angle-down"></b></a></dt>
+    <dd class="submenu">
+     <ul>
+       <li class="home"><a href="javascript:void(0)" name="{:U('Feedback/index')}" title="意见反馈列表" class="iframeurl" target="iframepage"><i class="fa fa-angle-double-right"></i>意见反馈列表</a></li>
+       </ul>
+      </dd>
+
+    <dt class="nav_link">
+        <a href="#" class="dropdown-toggle title_nav">
+            <i class="fa  fa-th-list"></i>
+            <span class="menu-text"> 轮播图管理 </span>
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+    </dt>
+    <dd class="submenu">
+        <ul>
+            <li class="home"><a href="javascript:void(0)" name="{:U('Banner/index')}" title="轮播图表" class="iframeurl"><i class="fa fa-angle-double-right"></i>轮播列表</a></li>
+        </ul>
+    </dd>       
+    </dl>  
+    </div>
+  </div>
+ </div>
+<!--内容-->
+  <div class="Sellerber_content" id="contents">
+    <div class="breadcrumbs" id="breadcrumbs">
+       <a id="js-tabNav-prev" class="radius btn-default left_roll" href="javascript:;"><i class="fa fa-backward"></i></a>
+       <div class="breadcrumb_style clearfix">
+	  <ul class="breadcrumb clearfix" id="min_title_list">
+        <li class="active home"><span title="我的桌面" data-href="index.html"><i class="fa fa-home home-icon"></i>首页</span></li>
+      </ul>
+      </div>
+      <a id="js-tabNav-next" style="margin-right:-75px" class="radius btn-default right_roll" href="javascript:;"><i class="fa fa-forward"></i></a>
+       
+      <a href="javascript:void()"  class="radius roll-right fullscreen"><i class="fa fa-arrows-alt"></i></a>
+    </div>
+  <!--具体内容-->  
+  <div id="iframe_box" class="iframe_content">
+  <div class="show_iframe" id="show_iframe">
+       <iframe scrolling="yes" class="simei_iframe" frameborder="0" src="{:U('x_index')}" name="iframepage" data-href="index.html"></iframe>
+       </div>
+      </div>
+  </div>
+<!--底部-->
+  <div class="Sellerber_bottom info" id="bottom">
+  <span class="l_f">&copy;We Team</span>
+  </div>
+ </div>
+</body>
+</block>
+</html>
+<block name="js">
+<script language='javascript' src='__PUBLIC__/Admin/js/jquery.nicescroll.js'></script>
+<script>
+
+$(function() { 
+	$("#Sellerber").frame({
+		float : 'left',
+		color_btn:'.skin_select',
+		header:70,//顶部高度
+		bottom:30,//底部高度
+		menu:200,//菜单栏宽度
+		Sellerber_menu:'.list_content',
+		Sellerber_header:'.Sellerber_header',
+	});
+});
+//时间设置
+  function currentTime(){ 
+   var weekday=new Array(7)
+	weekday[0]="星期一"
+	weekday[1]="星期二"
+	weekday[2]="星期三"
+	weekday[3]="星期四"
+	weekday[4]="星期五"
+	weekday[5]="星期六"
+	weekday[6]="星期日"	
+    var d=new Date(),str='';	
+    str+=d.getFullYear()+'年'; 
+    str+=d.getMonth() + 1+'月'; 
+    str+=d.getDate()+'日'; 
+    str+=d.getHours()+'时'; 
+    str+=d.getMinutes()+'分'; 
+    str+= d.getSeconds()+'秒'+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	str+=weekday[d.getDay()-1]; 
+    return str; 
+} 
+setInterval(function(){$('#time').html(currentTime)},1000); 
+// $('#Exit_system').on('click', function(){
+//       layer.confirm('是否确定退出系统？', {
+//      btn: ['是','否'] ,//按钮
+// 	 icon:2,
+//     }, 
+// 	function(){
+// 	  location.href="login.html";
+        
+//     });
+// });
+</script>
+</block>
+<script type="text/javascript">
+$("#menu_style").niceScroll({  
+  cursorcolor:"#888888",  
+  cursoropacitymax:1,  
+  touchbehavior:false,  
+  cursorwidth:"5px",  
+  cursorborder:"0",  
+  cursorborderradius:"5px"  
+});
+</script>

@@ -1,0 +1,161 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+    <meta name="renderer" content="webkit">
+    <title>一级货架</title>
+    <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+      <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+    <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+            $('a').hover(function() {
+                $(this).removeClass('grayscale')
+            }, function() {
+                $(this).addClass('grayscale')
+            });
+    </script>
+     <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+ </head>
+ <body>
+</block>
+<block name="main">
+    <input type="hidden" id="id" name="id" value="{$id}">
+    <div class="yHeader">
+        <div class="yNavIndex">
+            <div class="pullDown">
+                <h2 class="pullDownTitle">全部商品分类</h2>
+            </div>
+            <ul class="yMenuIndex">
+                <li><a href="" target="_blank">服装城</a></li>
+                <li><a href="" target="_blank">美妆馆</a></li>
+                <li><a href="" target="_blank">美食</a></li>
+                <li><a href="" target="_blank">全球购</a></li>
+                <li><a href="" target="_blank">闪购</a></li>
+                <li><a href="" target="_blank">团购</a></li>
+                <li><a href="" target="_blank">拍卖</a></li>
+                <li><a href="" target="_blank">金融</a></li>
+                <li><a href="" target="_blank">智能</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- header End -->
+<div class="containers clearfix">
+    <div class="pc-nav-item fl">
+        <a style="color:#f25350" href="{:U('Index/index')}" class="pc-title">首页</a> &gt; &gt;
+        <foreach name="parent" item="v">
+        <a style="color:#f25350" href="{:U('Goods/index', ['id' => $v['id']])}" class="pc-title">{$v['name']}</a> &gt; &gt;
+        </foreach>
+    </div>
+</div>
+<div class="containers">
+    <div class="pc-nav-rack clearfix">
+        <ul>
+        <empty name="type">
+            <li>暂无分类</li>
+        <else />
+            <foreach name="type" item="value">
+                <li><a href="__CONTROLLER__/index/id/{$value['id']}">{$value['name']}</a></li>
+            </foreach>
+        </empty>
+        </ul>
+    </div>
+     
+    <foreach name="tmpScroll" item="val">
+    <div>
+        <div class="pc-nav-title"><h3><?=$val['name']?></h3></div>
+        <div class="pc-nav-digit clearfix">
+            <ul>
+                <foreach name="data[$val['id']]" item="v">
+                <li>
+                    <div class="digit1"><a href="__CONTROLLER__/detail/id/{$v['id']}"><img style="width:147px;height:149px" src="__PUBLIC__/Uploads/{$v['pic']}"></a></div>
+                    <div class="digit2"><a>{$v['name']}</a></div>
+                </li>
+                </foreach>
+            </ul>
+        </div>
+    </div>
+    </foreach>
+
+    <div id="my_line" page="2" style="height:1px;background-color: gray;width:100%"></div>
+</div>
+<div class="pc-buying clearfix"></div>
+
+</block>
+</body>
+<block name="link">
+
+</block>
+<block name="js">
+<script>
+/*********滚动加载商品列表*********/
+var timer = null;
+$($(window).scroll( function() {
+    var id = $('#id').val();
+    if($(document).height() - $(window).scrollTop() < 1050)
+    {
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            var p = $('#my_line').attr('page');
+            $.ajax({
+                url:'{:U("index")}',
+                type:'get',
+                data:{
+                    id:id,
+                    p:p,
+                },
+                success:function(data)
+                {
+                        // console.log(data.page);
+                        $('#my_line').attr('page', data.page);
+                        var div = '';
+                        $(data.type).map(function() {
+                            div += '<div><div class="pc-nav-title"><h3>' + this.name + '</h3></div><div class="pc-nav-digit clearfix"><ul>';
+                            $(data.data[this.id]).map(function() {
+                                div += '<li><div class="digit1"><a href="__CONTROLLER__/detail/id/' + this.id + '"><img style="width:147px;height:149px"  keywords="' + this.des + '" title="' + this.des + '" src="__PUBLIC__/Uploads/' + this.pic + '"></a></div><div class="digit2"><a>' + this.name + '</a></div></li>';
+                            });
+                            div += '</ul></div></div>';
+                        });
+                        // console.log(div);
+                        $('#my_line').before(div);
+                }
+            });
+        }, 300);
+    }
+}));
+</script>
+</block>

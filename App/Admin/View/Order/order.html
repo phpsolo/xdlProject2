@@ -1,0 +1,138 @@
+<extend name="Index/index" />
+<block name="main">
+ 
+<body> 
+<div class="margin Competence_style" id="page_style">
+   <!--  <div class="operation clearfix"> -->
+   <div class="search  clearfix">
+   		<input name="search" type="text" id="search" class="form-control col-xs-8"/><button class="btn button_btn bg-deep-blue " onclick="search()"  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+	</div>
+</div>
+<div class="compete_list">
+       <table id="sample_table" class="table table_list table_striped table-bordered dataTable no-footer">
+		 <thead>
+			<tr>
+			  <th>订单号</th>
+			  <th>订单总额</th>
+              <th>订单状态</th>
+			  <th class="hidden-480">下单时间</th>          
+			  <th class="hidden-480">操作</th>
+             </tr>
+		    </thead>
+             <tbody class="list">
+
+            <foreach name="list" key="k" item="v" > 
+				<tr>
+					<td>{$v['oid']}</td>
+					<td>￥{$v['total']}</td>
+					<td>
+						<if condition="$v['status'] eq 待付款">
+	                		<a class="btn button_btn btn-danger" >待付款</a>
+	                	<elseif condition="$v['status'] eq 已支付待发货"/>
+	                		<a class="btn button_btn btn-Dark-success" >已支付-待发货</a>
+	                	<elseif condition="$v['status'] eq 待收货"/>
+	                		<a class="btn button_btn bg-deep-blue">待收货</a>
+	                	<else/>
+	                		<a class="btn button_btn btn-Dark-success" >交易完成</a>
+	                	</if>
+					</td>
+	                <td>{$v['addtime']}</td>
+	                <td oid="{$v['oid']}">
+	                	<a  href="{:U('Order/detail',['oid'=>$v['oid'],'total'=>$v['total']])}" class="btn button_btn bg-deep-blue">查看详情</a>
+	                	<if condition="$v['status'] eq 已支付待发货">
+	                		<a class="btn button_btn btn-Dark-success" onclick="send(this)">立即发货</a>
+	                	<elseif condition="$v['status'] eq 待付款"/>
+	                		<a class="btn button_btn btn-danger">等待付款</a>
+	                	<elseif condition="$v['status'] eq 待收货"/>
+	                		<a class="btn button_btn bg-deep-blue">等待收货</a>
+	                	<else/>
+	                		<a class="btn button_btn btn-Dark-success">交易完成</a>
+	                	</if>
+	                </td>
+				</tr>
+            </foreach>  
+		      </tbody>
+            	<tr>
+            		<td colspan="5" id="page">
+	            		{$page}            			
+            		</td>
+            	</tr>								
+	        </table>
+     </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+//点击发货，提示
+function send(obj){
+	var oid = obj.parentNode.getAttribute('oid');
+	layer.confirm('确认发货?',function(index){
+		$.ajax({
+			url:'{:U("Order/sendGoods")}',
+			data:{'oid':oid},
+			success:function(res){
+				if(res.status){
+					$($(obj)[0]).attr('class','btn button_btn bg-deep-blue');
+					$($(obj)[0]).html('等待收货');
+					$($(obj).parent().prev().prev().children()[0]).attr('class','btn button_btn bg-deep-blue');
+					$($(obj).parent().prev().prev().children()[0]).html('待收货');
+					layer.msg('已发货',{icon: 6,time:1000});
+				}
+			}
+		})
+	});
+}
+
+$(function(){
+	$("#Competence_sort").click(function(){
+		var option=$(this).find("option:selected").text();
+		var value=$(this).val();
+		if(value==0){
+			$("#sample_table tbody tr").show()
+		}
+		else{
+		$("#sample_table tbody tr").hide().filter(":contains('"+(option)+"')").show();	
+			}
+		}).click();	
+	});
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+
+/****添加分页样式******/
+// $('#btn').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+$('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+
+function search() {
+	var search = $('#search').val();
+	$.ajax({
+		type:"post",
+		url : "{:U('index')}",
+		data : {"search": search} ,
+		success:function(res){
+			tr = '';
+
+			$('#page').html(res.page);
+                delete res.page;
+			for (var k in res){
+
+                     tr += '<tr><td>'+res[k].oid+'</td><td>'+res[k].total+'</td><td>'+res[k].status+'</td><td>'+res[k].addtime+'</td><td><a title="查看详情" href="{:U("Order/detail")}?id='+res[k].id+'&total='+res[k].total+'" class="btn button_btn bg-deep-blue">查看详情</a></td></tr>';
+                    
+                }  
+                $('.list').html(tr);
+                $('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+		}
+	});
+}
+
+</script>
+</block>

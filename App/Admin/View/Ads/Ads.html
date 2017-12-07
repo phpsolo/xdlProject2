@@ -1,0 +1,196 @@
+<extend name="Index/index" />
+<block name="main">
+<body> 
+<div class="margin Competence_style" id="page_style">
+    <div class="operation clearfix">
+   <div class="search  clearfix">
+
+   <input name="" type="text"  class="form-control col-xs-8"/><button class="btn button_btn bg-deep-blue " onclick=""  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+</div>
+</div>
+<div class="compete_list">
+       <table id="sample_table" class="table table_list table_striped table-bordered dataTable no-footer">
+		 <thead>
+			<tr>
+			  <th>ID</th>
+			  <th>广告图片</th>
+              <th>广告名称</th>
+              <th>网址</th>        
+              <th>状态</th>
+			  <th class="hidden-480">操作</th>
+             </tr>
+		    </thead>
+             <tbody class="list">
+
+            <foreach name="list" key="k" item="v" > 
+			  <tr>
+				<td>{$v['id']}</td>
+				<td><img src="__PUBLIC__/Upload/{$v['pic']}" style="width:290px;height:65px"></td>
+				<td>{$v['name']}</td>
+				<td><a href="{$v['url']}" target="_blank">{$v['url']}</a></td>
+                <td class="td-status"><span class="label {$v['status']=='启用中'?'label-success':'btn-danger'}  label-sm">{$v['status']}</span></td>
+				<td class="td-manage" gid="{$v['id']}">
+				{$v['status'] == '启用中'?'
+                 <a title="停用" onclick="Competence_close(this)" class="btn button_btn btn-Dark-success">禁用</a>': 
+                 '<a style="text-decoration:none" class="btn button_btn btn-green" onClick="Competence_start(this)" href="javascript:;" title="启用中">启用</a>'}      
+                 <a title="删除" id="del" class="btn button_btn btn-danger">删除</a>
+				</td>
+			   </tr>
+            </foreach>  
+		      </tbody>
+           	 	<tr>
+            		<td colspan="9" id="page">
+	            		{$page}            			
+            		</td>
+            	</tr>								
+	        </table>
+     </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+/****添加分页样式******/
+$('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+$(function(){
+	$("#Competence_sort").click(function(){
+		var option=$(this).find("option:selected").text();
+		var value=$(this).val();
+		if(value==0){
+			  
+			$("#sample_table tbody tr").show()
+			}
+			else{
+		$("#sample_table tbody tr").hide().filter(":contains('"+(option)+"')").show();	
+			}
+		}).click();	
+	});
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+/*管理员-停用*/
+function Competence_close(obj){
+	// 获取ID
+	var gid = obj.parentNode.getAttribute('gid');
+	layer.confirm('确认要禁用吗？',function(index){
+		$.ajax({
+			type:'post',
+			url:'{:U("editStatus")}',
+			data:{'id':gid},
+			success:function(res){
+				console.log(res);
+				if(res.status > 0) {
+					$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn button_btn btn-green" onClick="Competence_start(this)" href="javascript:;" title="启用">启用</a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label btn-danger label-sm">禁用</span>');
+					$(obj).remove();
+					layer.msg('已禁用!',{icon: 5,time:1000});
+				}
+			} 
+		});
+	});
+}
+
+/*友情链接-启用*/
+function Competence_start(obj){
+	// 获取ID
+	var gid = obj.parentNode.getAttribute('gid');
+	layer.confirm('确认要启用吗？',function(index){
+		$.ajax({
+			type:'post',
+			url:'{:U("editStatus")}',
+			data:{'id':gid},
+			success:function(res){
+				if(res.status > 0) {
+					$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn button_btn btn-danger btn-Dark-success" onClick="Competence_close(this)" href="javascript:;" title="停用">禁用</a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-success label-sm">启用中</span>');
+					$(obj).remove();
+					layer.msg('已启用!',{icon: 6,time:1000});
+				}
+			} 
+		});
+	});
+}
+/****复选框选中******/
+$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+						
+				});
+$(document).on('click','#del',function (){
+		// 获取ID
+		var gid = $(this).parent().attr('gid');
+		// tr 
+		var that = $(this).parent().parent();
+		var pre = $('.current').parent().prev().children().attr('href');
+		//计算tbody下面的tr数量
+		var num = $('.list').children().length;
+		$.ajax({
+			type:'post',
+			url:'{:U("del")}',
+			data:{'id':gid},
+			success:function(res){
+
+				if (res.status > 0) {
+					// 删除节点
+					that.remove();
+					if(num == 1){	
+						pages(pre);
+					}
+					alert(res.info);
+				} else {
+					// alert(res.info);
+				}
+			} 
+		});
+});
+$('#page').delegate('a','click',function(){
+        var url = $(this).attr('href');
+        $.ajax({
+            type:'get',
+            url:url,
+            success:function(res){
+                tr = '';
+				$('#page').html(res.page);
+                delete res.page;
+				for (var k in res){
+                    tr += '<tr><td>'+res[k].id+'</td><td><img src="__PUBLIC__/Upload/'+res[k].pic+'" style="width:290px;height:65px"></td><td>'+res[k].name+'</td><td>'+res[k].url+'</td><td class="td-status"><span class="label '+(res[k].status=="启用中"?"label-success":"btn-danger")+' label-sm">'+res[k].status+'</span></td><td class="td-manage" gid="'+res[k].id+'">'+(res[k].status == "启用中"?"<a title='停用' onclick='Competence_close(this)' href='javascript:;' class='btn button_btn btn-Dark-success'>禁用</a>":"<a style='text-decoration:none' class='btn button_btn btn-green' onClick='Competence_start(this)'  title='启用中'>启用</a>")+'<a title="删除" href="javascript:;" id="del" class="btn button_btn btn-danger">删除</a></td></tr>';
+                    
+                }  
+                $('.list').html(tr);
+                $('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+            }
+        })
+        return false;
+    })
+function pages(url){
+	$.ajax({
+    type:'get',
+    url:url,
+    success:function(res){
+        tr = '';
+		$('#page').html(res.page);
+        delete res.page;
+		for (var k in res){
+            tr += '<tr><td>'+res[k].id+'</td><td><img src="__PUBLIC__/Upload/'+res[k].pic+'" style="width:290px;height:65px"></td><td>'+res[k].name+'</td><td>'+res[k].url+'</td><td class="td-status"><span class="label '+(res[k].status=="启用中"?"label-success":"btn-danger")+' label-sm">'+res[k].status+'</span></td><td class="td-manage" gid="'+res[k].id+'">'+(res[k].status == "启用中"?"<a title='停用' onclick='Competence_close(this)' href='javascript:;' class='btn button_btn btn-Dark-success'>禁用</a>":"<a style='text-decoration:none' class='btn button_btn btn-green' onClick='Competence_start(this)'  title='启用中'>启用</a>")+'<a title="删除" href="javascript:;" id="del" class="btn button_btn btn-danger">删除</a></td></tr>';
+            
+        }  
+        $('.list').html(tr);
+        $('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+    }
+})
+return false;
+}
+</script>
+</block>

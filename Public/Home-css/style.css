@@ -1,0 +1,249 @@
+a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, label, legend, li, ol, p, pre, small, span, strong, u, ul, var {
+    margin: 0;
+    padding: 0;
+}
+
+em, i, u {
+    font-style: normal;
+}
+ul,li,dd,dl,dt{
+    list-style-type: none
+}
+li,a,div{
+    outline: none
+}
+.clearfix:after {
+    content: "." ;
+    display: block ;
+    height: 0 ;
+    clear: both ;
+    visibility: hidden ;
+}
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */ 
+
+.clear, .clr {
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+.cl{
+    clear: both;
+}
+#sub_btn{
+    background: red none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 700;
+    height: 29px;
+    line-height: 29px;
+    padding: 0 10px;
+    text-align: center;
+    border:0px;
+}
+img{
+    border:0
+}
+a {
+    color:#666666;
+    text-decoration: none;
+    cursor: pointer
+}
+a:hover{
+    color:#1BA358
+}
+
+
+body {
+    background: #fff none repeat scroll 0 0;
+    color: #666;
+    font: 12px/150% Arial,Verdana,"宋体";
+     overflow-x: hidden
+}
+
+.cw-icon {
+    cursor: default;
+    position: relative;
+}
+
+
+.cw-icon .i, .cw-icon i {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+}
+
+#settleup-2014 {
+    margin-right: -23px;
+}
+#settleup-2014 {
+    float: right;
+    height: 36px;
+    margin-top: -56px;
+    z-index: 11;
+}
+.dorpdown {
+    position: relative;
+}
+
+#settleup-2014 .cw-icon {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #dfdfdf;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 28px 0 36px;
+    text-align: center;
+    width: 75px;
+}
+
+#settleup-2014 .ci-left {
+    background: url("http://misc.360buyimg.com/jdf/1.0.0/unit/globalImages/1.0.0/jd2015img.png") no-repeat scroll 0 -58px;
+    height: 16px;
+    left: 18px;
+    top: 9px;
+    width: 18px;
+}
+
+#settleup-2014 .ci-right {
+    color: #999;
+    font: 400 13px/13px simsun;
+    height: 13px;
+    overflow: hidden;
+    right: 10px;
+    top: 11px;
+    width: 7px;
+}
+
+#settleup-2014 .ci-count {
+    background-color: #c81623;
+    border-radius: 7px 7px 7px 0;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    left: 104px;
+    line-height: 12px;
+    min-width: 12px;
+    padding: 1px 2px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+}
+
+.dorpdown-layer {
+    display: none;
+    position: absolute;
+}
+
+#settleup-content {
+    background: #fff none repeat scroll 0 0;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+
+#settleup-content .smt {
+    height: 25px;
+    line-height: 25px;
+    padding: 6px 8px;
+}
+
+#settleup-content .smc {
+    background: #fff none repeat scroll 0 0;
+    height: auto !important;
+    max-height: 344px;
+    overflow-y: auto;
+}
+
+#settleup-content ul {
+    margin-top: -1px;
+}
+
+#settleup-content li {
+    border-top: 1px dotted #ccc;
+    line-height: 17px;
+    overflow: hidden;
+    padding: 8px 10px;
+    vertical-align: bottom;
+}
+
+#settleup-content .p-img {
+    border: 1px solid #ddd;
+    float: left;
+    font-size: 0;
+    height: 50px;
+    margin-right: 10px;
+    padding: 0;
+    width: 50px;
+}
+
+#settleup-content .p-name {
+    float: left;
+    height: 52px;
+    width: 120px;
+}
+
+#settleup-content .p-detail {
+    float: right;
+    text-align: right;
+}
+
+#settleup-content .p-price {
+    font-weight: 700;
+}
+
+#settleup-content .hl-green {
+    background: #3b0 none repeat scroll 0 0;
+}
+#settleup-content .hl-green, #settleup-content .hl-orange {
+    color: #fff;
+    display: inline-block;
+    font: 12px/16px simsun;
+    margin-right: 5px;
+    padding: 0 2px;
+}
+
+#settleup-content .smb {
+    background: #f5f5f5 none repeat scroll 0 0;
+    padding: 8px;
+}
+
+#settleup-content .smb .p-total {
+    float: left;
+    line-height: 29px;
+}
+
+#settleup-content .smb a {
+    background: #e4393c none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    float: right;
+    font-weight: 700;
+    height: 29px;
+    line-height: 29px;
+    padding: 0 10px;
+    text-align: center;
+}
+ .hover .dorpdown-layer {
+    display: block;right:0;width:308px;
+}
+.m, .mb, .mc, .mt, .p-detail, .p-img, .p-market, .p-name, .p-price, .sm, .smb, .smc, .smt {
+    overflow: hidden;
+}
+
+
+#settleup-2014.hover .cw-icon, #settleup-2014.hover .dorpdown-layer, #settleup-2014:hover .cw-icon, #settleup-2014:hover .dorpdown-layer {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#settleup-2014.hover .spacer, #settleup-2014:hover .spacer {
+    background: #fff none repeat scroll 0 0;
+    height: 12px;
+    position: absolute;
+    right: 0;
+    top: -7px;
+    width: 139px;
+}

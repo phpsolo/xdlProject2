@@ -1,0 +1,181 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+     <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+</block>
+<body>
+<!-- header End -->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+              
+                <div class="fl"><a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a></div>
+              
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- 商城快讯 begin -->
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd ><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd class="cur"><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                    
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>账户安全</h2></div>
+            </div>
+            <div class="member-border">
+               <div class="member-secure clearfix">
+                   <div class="member-extent fl">
+                       <h2 class="fl">安全级别</h2>
+                       <ul class="fl">
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on"></li>
+                           <li class="on1"><a href="#"></a></li>
+                           <li class="on2"><a href="#"></a></li>
+                           <li class="on3"><a href="#"></a></li>
+                       </ul>
+                       <span class="fl">较高</span>
+                   </div>
+                   <div class="fr reds"><p> * 建议您开启全部安全设置，以保障您的账户及资金安全</p></div>
+               </div>
+               <div class="member-caution clearfix">
+                   <ul>
+                       <li class="clearfix">
+                           <div class="warn1"></div>
+                           <div class="warn2">登录密码</div>
+                           <div class="warn3">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</div>
+                           <div class="warn4"><a href="{:U('Safe/ModifyPass')}">修改密码</a></div>
+                       </li>
+                       <li class="clearfix">
+                           <div class="warn1"></div>
+                           <div class="warn2">密保邮箱</div>
+                           <div class="warn3">已设置密保邮箱。  </div>
+                           <div class="warn4"><a href="{:U('Safe/securityMail')}">修改邮箱</a> </div>
+                       </li>
+                       <li class="clearfix">
+                           <div class="warn1"></div>
+                           <div class="warn2">个人信息</div>
+                           <div class="warn3">请您尽快完善个人用户信息</div>
+                           <div class="warn5"><a href="{:U('Safe/personalMessage')}">修改个人信息</a></div>
+                       </li>
+                   </ul>
+                   <div class="member-prompt">
+                       <p>安全提示：</p>
+                       <p>您当前IP地址是：<i class="reds"><?php echo $_SERVER['REMOTE_ADDR']?></i>  广州市          上次登录的IP：<i class="reds">{$pre.login_ip|long2ip}</i> {$pre.login_time}  <i class="reds"> </i> 广州市</p>
+                       <p>1. 注意防范进入钓鱼网站，不要轻信各种即时通讯工具发送的商品或支付链接，谨防网购诈骗。</p>
+                       <p>2. 建议您安装杀毒软件，并定期更新操作系统等软件补丁，确保账户及交易安全。      </p>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 商城快讯 End -->
+
+<!--- footer begin-->
+
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

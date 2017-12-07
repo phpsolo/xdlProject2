@@ -1,0 +1,128 @@
+<extend name="Index/index" /> 
+<block name="top">
+<link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+<script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+        $('.dorpdown').hover(function() {
+            $(this).addClass("hover");
+        }, function() {
+            $(this).removeClass("hover");
+        })
+    });
+(function(a){
+     a.fn.hoverClass=function(b){
+         var a=this;
+         a.each(function(c){
+             a.eq(c).hover(function(){
+                 $(this).addClass(b)
+             },function(){
+                 $(this).removeClass(b)
+             })
+         });
+         return a
+     };
+ })(jQuery);
+
+ $(function(){
+     $("#pc-nav").hoverClass("current");
+ });
+</script>
+
+</block>
+<block name="main">
+<style>
+</style>
+<div class="containers"><div class="pc-nav-item"><a style="color:#f25350" href="{:U('Index/index')}" class="pc-title">首页</a> >>
+<div class="containers"><div class="pc-add-item"><img src="__PUBLIC__/Home-img/ad/hot1.jpg"></div></div>
+<div class="pc-buying clearfix">
+    <div class="time-list time-list-w fl">
+        
+        <div class="time-border time-border-h time-border-list clearfix">
+            <ul>
+            <empty name="data">
+                <li><h1>暂无促销商品</h1></li>
+            <else />
+            <foreach name="data" item="v" >
+                <li time="{$v['addtime']}" class="my_li">
+                    <div class="time-title time-clear">
+                        
+                        <div class="time-item pc-time-item fl clearfix">
+                            <strong class="hour_show">00</strong>
+                            <strong class="pc-clear-sr">:</strong>
+                            <strong class="minute_show">00</strong>
+                            <strong class="pc-clear-sr">:</strong>
+                            <strong class="second_show">00</strong>
+                        </div>
+                    </div>
+                    <a href="{:U('detail', ['id' => $v['id']])}"> <img style="width:259px;height:259px;" src="__PUBLIC__/Uploads/{$v['pic']}"></a>
+                    <p class="head-name"><a href="{:U('detail', ['id' => $v['id']])}">{$v['name']}</a> </p>
+                    <p><span class="price">￥{:number_format($v['price'])}</span><span class="discount">￥<?=number_format($v['price'] / 0.3)?></span></p>
+                    <p class="label-default"><?=0.3*10?>折</p>
+                </li>
+            </foreach>
+            </empty>
+            </ul>
+        </div>
+    </div>
+</div>
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+<script>
+$($('.my_li').map(function() {
+    // console.log(this);
+    timer(this, $(this).attr('time'));
+}));
+ (function(a){
+     a.fn.hoverClass=function(b){
+         var a=this;
+         a.each(function(c){
+             a.eq(c).hover(function(){
+                 $(this).addClass(b)
+             },function(){
+                 $(this).removeClass(b)
+             })
+         });
+         return a
+     };
+ })(jQuery);
+
+ $(function(){
+     $("#pc-nav").hoverClass("current");
+ });
+function timer(obj, intDiff){
+    console.log(intDiff);
+    $(obj).attr('new_time', window.setInterval(function(){
+         var day=0,
+                 hour=0,
+                 minute=0,
+                 second=0;//时间默认值
+         if(intDiff > 0){
+             day = Math.floor(intDiff / (60 * 60 * 24));
+             hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+             minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+             second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+         }
+         if (minute <= 9) minute = '0' + minute;
+         if (second <= 9) second = '0' + second;
+         // console.log($(obj).children());
+         $(obj).children().eq(0).children().children().eq(0).html('<s id="h"></s>'+hour+'');
+         $(obj).children().eq(0).children().children().eq(2).html('<s></s>'+minute+'');
+         $(obj).children().eq(0).children().children().eq(4).html('<s></s>'+second+'');
+         intDiff--;
+
+        if(intDiff <= 0)
+        {
+            $(obj).children().eq(0).children().empty().append('<span style="display:inline-block;width:135px;height:32px;text-align:center;line-height:32px;border-radius:5px;color:#FFF;background-color:gray">开始抢购</span>');
+            clearInterval($(obj).attr('new_time')); 
+        }  
+     }, 1000));
+}
+</script>
+</block>

@@ -1,0 +1,308 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+  <style>
+        .alert { display: none; position: fixed; top: 13%; left: 45%; min-width: 200px; margin-left: -100px; z-index: 99999; padding: 15px; border: 1px solid transparent; border-radius: 4px;
+        } .alert-success { color: #a94442; background-color: #f2dede; border-color: #ebccd1;text-align: center;
+        }
+    </style>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+ </block>
+ <body>
+
+<!--- header begin-->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="{:U('Index/index')}">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<div class="alert"></div>
+<!-- 商城快讯 begin -->
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+                <div class="fl">
+                  <a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a>
+                </div>
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- header End -->
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd class="cur"><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>我的订单</h2></div>
+                <div class="member-backs member-icons fr"><a href="#">搜索</a></div>
+                <div class="member-about fr"><input type="text" placeholder="商品名称/商品编号/订单编号"></div>
+            </div>
+            <div class="member-whole clearfix">
+                <ul id="H-table" class="H-table">
+                    <li class="cur"><a href="#" status="all">我的订单</a></li>
+                    <li><a href="#" status="1">待付款(<em id="one">{$one}</em>)</a></li>
+                    <li><a href="#" status="2">待发货(<em id="two">{$two}</em>)</a></li>
+                    <li><a href="#" status="3">待收货(<em id="three">{$three}</em>)</a></li>
+                    <li><a href="#" status="5">交易完成(<em id="four">{$four}</em>)</a></li>
+                </ul>
+            </div>
+          <a id="marks"></a>
+<script>
+//准备一个数组，用于存储缓存数据
+  var arr = [];
+  var btn = [];
+  $('.H-table a').on('click',function(){
+    //获取订单状态码
+    var status = $(this).attr('status');
+    $(this).parent().addClass('cur');
+    $(this).parent().siblings().removeClass();
+    //用于删除上一个分页按钮
+    $('#sb').remove();
+    $('.member-border').remove();
+    tops();
+    //加载菜单
+    //判断是否存在缓存，存在则调用onload方法，不存在则ajax请求服务器
+    if(arr[status]){
+      //加载新分页按钮
+      sbtnb(btn[status]);
+      onloads(arr[status]);
+    } else {
+      $.ajax({
+        url:'{:U("getOrder")}',
+        data:{'status':status},
+        success:function(res){
+          // console.log($(res[0][0]).length);
+          arr[status] = res;
+          btn[status] = res[0].page;
+          //分配新的分页按钮
+          sbtna(res);
+          onloads(res);
+          
+        }
+      });
+    }
+  })
+</script>
+<script>
+$('body').delegate('.page a','click',function(){
+  var url = $(this).attr('href');
+  $.ajax({
+    url:url,
+    type:'get',
+    success:function(res){
+      //用于删除上一个分页按钮
+      $('.replace').children().remove();
+      $('#sb').remove();
+      sbtna(res);
+      onloads(res);
+    }
+  });
+  return false;
+})
+
+//首次加载时
+$(document).ready(function(){
+  tops();
+  $('.replace').children().remove();
+  var url = $('.current').html();
+  $.ajax({
+    url:'{:U("Order/order")}',
+    data:{p:url},
+    success:function(res){
+      sbtna(res);
+      onloads(res);
+    }
+  })
+})
+
+//用于加载菜单
+function tops(){
+  $('.member-whole').after('<div class="member-border"><div class="H-over member-over"></div></div>');
+  $('.H-over').append('<div class="member-cancel clearfix"><span class="be1">订单信息</span><span class="be2">收货人</span><span class="be2">订单金额</span><span class="be2">订单时间</span><span class="be2">订单状态</span><span class="be2">订单操作</span></div><div class="member-sheet clearfix"><ul class="replace"></ul></div>');
+}
+function onloads(res){
+  delete res[0].page;
+  for(var i in res[0]){
+    $('.replace').append('<li><div class="member-minute clearfix"><span>'+res[0][i].addtime+'</span><span oid='+res[0][i].oid+'>订单号：<em>'+res[0][i].oid+'</em></span><span>收货地址：<em>'+res[0][i].address+'</em></span></div><div class="member-circle clearfix "><div class="ci1 fuck1'+i+'"></div><div class="ci2 fuck'+i+'">'+res[0][i].receiver+'</div><div class="ci3 fuck'+i+'"><b>￥'+res[0][i].total+'</b></div><div class="ci4 fuck'+i+'"><p>'+res[0][i].addtime+'</p></div><div class="ci5 fuck'+i+'"><p>'+res[0][i].status+'</p>  '+(res[0][i].status=="待付款"?"<p><a>假装支付</a></p>":"")+'</div><div class="ci6 fuck'+i+'">'+(res[0][i].status=="待收货"?"<p><a>确认收货</a></p>":"")+'</div></div></li>');
+      for(var l in res[1][i]){
+        $('.fuck1'+i+'').append('<div class="ci7 clearfix"><span class="gr1"><a href="{:U("Goods/detail")}?id='+res[1][i][l].gid+'"><img src="__PUBLIC__/Uploads/'+res[1][i][l].pic+'" width="60" height="60" title="" about=""></a></span><span class="gr2"><a href="#">'+res[1][i][l].name+'</a></span><p class="gr2"><a href="#">'+res[1][i][l].attr+'</a></p><span class="gr3" style="color:red">价格:￥'+res[1][i][l].price+'</span><span class="gr3" style="color:red">X'+res[1][i][l].num+'</span></div>');
+      }
+  }
+  cssObj();
+}
+
+//支付
+$('body').delegate('.ci5 a','click',function(){
+  var oid = $(this).parent().parent().parent().prev().children().first().next().attr('oid');
+  var thiss = $(this);
+  var parent = $(this).parent().parent().parent().parent();
+  var cur = $('.current').html();
+  var url = '/ThinkPHP/Home/Order/getOrder/status/1/p/'+cur+'.html';
+  var pre = $('.current').parent().prev();
+  pre = $(pre[0]).attr('href');
+  $.ajax({
+    url:'{:U("Order/payHome")}',
+    data:{'mark':true,'oid':oid,'status':2},
+    success:function(res){
+      $('.alert').html(res.info).addClass('alert-success').show().delay(1500).fadeOut();
+      //待付款个数
+      num = $('#one').html();
+      num2 = $('#two').html();
+      $('#one').html( num - 1);
+      $('#two').html( Number(num2) + 1);
+      parent.remove();
+      if($('.replace li').length == 1){
+        pages(url);
+      } else if($('.replace li').length == 0 &&pre){
+        pages(pre);
+      }
+    }
+  })
+})
+//确认收货
+$('body').delegate('.ci6 a','click',function(){
+  var oid = $(this).parent().parent().parent().prev().children().first().next().attr('oid');
+  var thiss = $(this);
+  var parent = $(this).parent().parent().parent().parent();
+  var cur = $('.current').html();
+  var url = '/ThinkPHP/Home/Order/getOrder/status/3/p/'+cur+'.html';
+  var pre = $('.current').parent().prev();
+  pre = $(pre[0]).attr('href');
+  $.ajax({
+    url:'{:U("Order/payHome")}',
+    data:{'mark':true,'oid':oid,'status':5},
+    success:function(res){
+      $('.alert').html(res.info).addClass('alert-success').show().delay(1500).fadeOut();
+      num = $('#three').html();
+      num2 = $('#four').html();
+      $('#three').html( num - 1);
+      $('#four').html( Number(num2) + 1);
+      parent.remove();
+        if($('.replace li').length == 1){
+          pages(url);
+        } else if($('.replace li').length == 0 &&pre){
+          pages(pre);
+        }
+        //  else if($('.replace li').length == 0 &&cur==1){
+        //   $('.replace').html('暂无数据');
+        // }
+    }
+  })
+})
+//用于保持分页
+function pages(url){
+  $.ajax({
+    url:url,
+    success:function(res){
+      //用于删除上一个分页按钮
+      $('.replace').children().remove();
+      $('#sb').remove();
+      sbtna(res);
+      onloads(res);
+    }
+  })
+}
+//分配新的分页按钮
+function sbtna(res){
+$('#marks').after('<div class="clearfix" id="sb" style="padding:30px 20px;"><div class="fr pc-search-g pc-search-gs"><b class="page" id="ipage">'+res[0].page+'</b></div></div>');
+//赋予样式
+$('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+}
+
+function sbtnb(res){
+  //分配新的分页按钮
+$('#marks').after('<div class="clearfix" id="sb" style="padding:30px 20px;"><div class="fr pc-search-g pc-search-gs"><b class="page" id="ipage">'+res+'</b></div></div>');
+//赋予样式
+$('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+}
+
+//用于修正样式
+function cssObj(){
+  var num = $('.ci1').length;
+  for(i=0;i<num;i++){
+      var h = $('.fuck1'+i).addClass('fuck1'+i).height();
+      var real = h-20 +'px';
+      // console.log(real);
+      $('.fuck'+i).addClass('fuck'+i).css('height',real);
+      $('.fuck'+i).addClass('fuck'+i).css('height',real);
+      $('.fuck'+i).addClass('fuck'+i).css('height',real);
+      $('.fuck'+i).addClass('fuck'+i).css('height',real);
+      $('.fuck'+i).addClass('fuck'+i).css('height',real);
+  }
+}
+</script>
+</section>
+<!-- 商城快讯 End -->
+</block>
+<!--- footer begin-->
+
+
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

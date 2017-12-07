@@ -1,0 +1,311 @@
+<extend name="Index/index" />
+<block name="header">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="__PUBLIC__/Admin/js/jquery.dataTables.min.js"></script>
+<script src="__PUBLIC__/Admin/js/jquery.dataTables.bootstrap.js"></script>
+<style>
+	a:hover{
+		cursor:pointer;
+	}
+</style>
+</block>
+
+<block name="main">
+<body id="menu_style">
+<div class="margin" id="page_style">
+<div class="operation clearfix">
+<button class="btn button_btn btn-danger" type="button" onclick="delAll()"><i class="fa fa-trash-o"></i>&nbsp;删除</button>
+<span class="submenu"><a href="{:U('add')}" class="btn button_btn bg-deep-blue" title="添加产品"><i class="fa  fa-edit"></i>&nbsp;添加产品</a></span>
+<div class="search  clearfix">
+	<label class="label_name">商品搜索：</label>
+	<input name="name" onblur="search(this)" type="text"  class="form-control col-xs-6"/><button class="btn button_btn bg-deep-blue " onclick=""  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+
+</div>
+<div class="search  clearfix">
+	<label class="label_name">分类搜索：</label>
+	<select name="tid" onchange="searchTid(this)">
+	<empty name="type">
+		<option value="">没分类</option>
+	<else />
+		<option value="">--全部分类--</option>
+	<foreach name="type" item="v">
+		<option <?=$v['attr']?> value="{$v['id']}">{$v['name']}</option>
+	</foreach>
+	</empty>
+	</select>
+</div>
+</div>
+<!--列表展示-->
+<div class="list_Exhibition margin-sx">
+ <table class="table table_list table_striped table-bordered" id="sample-table">
+  <thead>
+  <tr>
+  	<th width="30"><label><input type="checkbox" class="ace my_all"><span class="lbl"></span></label></th>
+   	<th width="100">产品编号</th>
+   	<th>产品名称</th>
+   	<th width="100">品牌</th>
+   	<th width="120">分类</th>
+   	<th width="100">价格</th>
+   	<th width="100">库存</th>
+   	<th width="150">添加日期</th>
+   	<th width="100">状态</th>
+   	<th width="220">操作</th>
+  </tr>   
+  </thead>
+  <tbody>
+  	<empty name="data">
+		<tr><td colspan="10"><h1>暂无数据</h1></td></tr>
+	
+	<else />
+  <foreach name="data" item="v">
+   <tr>
+		<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
+		<td>{$v['id']}</td>
+		<td>{$v['name']}</td>
+		<td>{$v['bid']}</td>
+		<td>{$v['tid']}</td>
+		<td>{$v['price']}</td>
+		<td>{$v['stock']}</td>
+		<td>{$v['addtime']}</td>
+		<td>{$v['status']}</td>
+		<td>
+			<a onclick="_edit(this)" class="btn button_btn bg-deep-blue" >修改</a>
+			<a onclick="del(this)" class="btn button_btn btn-danger" >删除</a>
+		</td>
+   </tr>
+   </foreach>
+   </empty>
+  </tbody>
+ </table>
+	<div class="dataTables_paginate paging_bootstrap">
+	{$btns}
+	</div>
+</div>
+</div>
+</body>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+$(reset());
+function reset()
+{
+	$('.dataTables_paginate').children().children().unwrap().wrap('<li></li>').parent().parent().wrapInner('<ul class="pagination"></ul>');
+}
+
+/*********绑定点击分页按钮*********/
+$('.dataTables_paginate').delegate('ul > li > a', 'click', function() {
+	$.ajax({
+		type:'get',
+		url:$(this).attr('href'),
+		async:true,
+		datatype:'json',
+		success:function (result) {
+			var data = $.parseJSON(result).data;
+			var btns = $.parseJSON(result).btns;
+			var i = 0;
+			$('tbody > tr').empty().map(() => {
+			//遍历td
+				for(var key in data[i]) {
+					$('tbody > tr').eq(i).append($('<td>' + data[i][key] + '</td>'));
+				};
+				i++;
+			});
+			//添加操作td
+			$('tbody > tr').has('td').append($('<td><a class="btn button_btn bg-deep-blue" onclick="_edit(this)" >修改</a> <a  onclick="del(this)" class="btn button_btn btn-danger" >删除</a></td>'));
+			$('.dataTables_paginate').empty().html(btns);
+			reset();
+			$('tbody > tr').has('td').prepend('<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>');
+		}
+	});
+	return false;
+});
+	
+/*********分页*********/
+function page(obj) {
+
+	var p = $(obj).html();
+	if ($(obj).attr('class') == 'next')
+	{
+		p = Number($('.current').html()) + 1;
+	} else if($(obj).attr('class') == 'prev') {
+		p = Number($('.current').html()) - 1;
+	} else if ($(obj).attr('class') == 'current')
+	{
+		// console.log(1);
+		p = $('.current').html();
+	}
+	$.ajax({
+		type:'get',
+		url:$(this).attr('href'),
+		async:true,
+		datatype:'json',
+		data:{
+			p:p,
+		},
+		success:function (result) {
+			var data = $.parseJSON(result).data;
+			var btns = $.parseJSON(result).btns;
+			var i = 0;
+			$('tbody > tr').empty().map(() => {
+			//遍历td
+				for(var key in data[i]) {
+					$('tbody > tr').eq(i).append($('<td>' + data[i][key] + '</td>'));
+				};
+				i++;
+			});
+			//添加操作td
+			$('tbody > tr').has('td').append($('<td><a class="btn button_btn bg-deep-blue" onclick="_edit(this)" >修改</a>  <a onclick="del(this)" class="btn button_btn btn-danger">删除</a></td>'));
+			$('.dataTables_paginate').empty().html(btns);
+			reset();
+			$('tbody > tr:parent').has('td').prepend('<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>')
+		}
+	});
+	return false;
+}
+
+/*********全选按钮*********/
+$('.my_all').click(function() {
+	if ($(this).prop('checked'))
+	{
+		$('.ace').prop('checked', true);
+	} else {
+		$('.ace').prop('checked', false);	
+	}
+});
+
+/*********多个ajax删除*********/
+function delAll()
+{
+	var r = confirm('确认删除？');
+	var ids = [];
+	var i = 0;
+
+	if(r)
+	{
+		$('tbody .ace:checked').parent().parent().next().map(function() {
+			ids[i] = $(this).html();
+			i++;
+		});
+		
+		
+		$.ajax({
+			url:'{:U("delAll")}',
+			type:'get',
+			datatype:'json',
+			data:{
+				ids:ids,
+			},
+			success:function (data)
+			{
+				if (data === '0')
+				{
+					alert('吃屎吧!');
+				} else {
+					page();
+				}
+			}
+		});
+	} else {
+		return false;
+	}
+}
+
+/*********商品名搜索*********/
+function search(obj)
+{
+
+	$.ajax({
+		url:'{:U("index")}',
+		data:{
+			name:$(obj).val()
+		},
+		success:function(result) {
+			var data = $.parseJSON(result).data;
+			var btns = $.parseJSON(result).btns;
+			var i = 0;
+			$('tbody > tr').empty().map(() => {
+			//遍历td
+				for(var key in data[i]) {
+					$('tbody > tr').eq(i).append($('<td>' + data[i][key] + '</td>'));
+				};
+				i++;
+			});
+			//添加操作td
+			$('tbody > tr').has('td').append($('<td><a class="btn button_btn bg-deep-blue" onclick="_edit(this)" >修改</a>  <a onclick="del(this)" class="btn button_btn btn-danger">删除</a></td>'));
+			$('.dataTables_paginate').empty().html(btns);
+			reset();
+			$('tbody > tr:parent').has('td').prepend('<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>');
+		}
+	});
+}
+
+/*********按分类搜索*********/
+function searchTid(obj)
+{
+	$.ajax({
+		url:'{:U("index")}',
+		data:{
+			tid:$(obj).val()
+		},
+		success:function(result) {
+			var data = $.parseJSON(result).data;
+			var btns = $.parseJSON(result).btns;
+			var i = 0;
+			$('tbody > tr').empty().map(() => {
+			//遍历td
+				for(var key in data[i]) {
+					$('tbody > tr').eq(i).append($('<td>' + data[i][key] + '</td>'));
+				};
+				i++;
+			});
+			//添加操作td
+			$('tbody > tr').has('td').append($('<td><a class="btn button_btn bg-deep-blue" onclick="_edit(this)" >修改</a>  <a onclick="del(this)" class="btn button_btn btn-danger">删除</a></td>'));
+			$('.dataTables_paginate').empty().html(btns);
+			reset();
+			$('tbody > tr:parent').has('td').prepend('<td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>');
+		}
+	});
+}
+
+/*********单个ajax删除*********/
+function del(obj)
+{
+	var id = $(obj).parent().parent().children().eq(1).html();
+	var current = $('.current').get();
+	console.log(current);
+	$.ajax({
+		url:'__CONTROLLER__/del',
+		type:'get',
+		datatype:'text',
+		async:true,
+		data:{
+			id:id
+		},
+		success:function(result) {
+			if (result === '0')
+			{
+				alert('吃屎吧!');
+			} else {
+				page($('.current'));
+			}
+		}
+	});
+}
+
+function _edit(obj)
+{
+	var id = $(obj).parent().parent().children().eq(1).html();
+	window.location.href = "__CONTROLLER__/edit/id/" + id; 
+}
+
+//设置框架
+ $(function() { 
+	$("#page_style").frame({
+		float : 'left',
+		menu_nav:'.operation',
+		color_btn:'.skin_select',
+	});
+});
+</script>
+</block>

@@ -1,0 +1,64 @@
+<extend name="Index/index" />
+<block name="header">
+  <script src="js/jquery.dataTables.min.js"></script>
+  <script src="js/jquery.dataTables.bootstrap.js"></script>
+  <script src="js/laydate/laydate.js" type="text/javascript"></script>
+</block>
+<block name="main">
+<body>
+<div class="margin">
+<div class="add_style">
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{$id}">
+    <ul>
+        <li class="clearfix">
+            <label class="label_name col-xs-1"><i>*</i>产品ID：&nbsp;&nbsp;</label>
+            <div class="Add_content col-xs-11" id="Upload">
+                <div class="images_Upload clearfix margin-bottom" id="images_Upload">
+                    <label>
+                        <input name="gid" type="text" value="{$data['gid']}" />
+                    </label>
+                </div>
+            </div>
+        </li>
+
+        <li class="clearfix">
+            <label class="label_name col-xs-1">轮播图片：&nbsp;&nbsp;</label>
+            <div class="Add_content col-xs-11" id="Upload">
+                <div class="images_Upload clearfix margin-bottom" id="images_Upload">
+                    <label>
+                        <span class="operating" title="上传图片"><i class="fa  fa-image"></i></span>
+                        <input name="pic" style="display:none" type="file" />
+                    </label>
+                    <a class="operating delete_Upload" title="清除图片" onclick="delete_Upload(this)"><i class="fa fa-remove"></i></a>
+                </div>
+            </div>
+        </li>
+
+        <li class="clearfix">
+            <label class="label_name col-xs-1"><i>*</i>是否显示：&nbsp;&nbsp;</label>
+            <div class="Add_content col-xs-1">
+                <label><span>显示</span><input style="margin-top:9px;width:15%" name="status" type="radio" value="1" checked class="col-xs-6"/></label>
+            </div><div class="Add_content col-xs-1">
+                <label><span>隐藏</span><input <?=$data['status'] == 2 ? 'checked' : ''?> style="margin-top:9px;width:15%" name="status" type="radio" value="2" class="col-xs-6"/></label>
+            </div>
+        </li>
+    </ul>
+ <div class="Button_operation btn_width">
+    <button class="btn button_btn bg-deep-blue">保存修改</button>
+    <a class="btn button_btn bg-gray" href="{:U('index')}">取消</a>
+ </div>
+</form>
+</div>
+</div>
+</body>
+</block>
+<block name="js">
+<script>
+    function delete_Upload(obj)
+    {
+        $(obj).prev().children().last().remove();
+        $(obj).prev().append('<input name="pic" style="display:none" type="file" />');
+    }
+</script>
+</block>

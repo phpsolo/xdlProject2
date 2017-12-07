@@ -1,0 +1,96 @@
+<extend name="Index/index" />
+<block name="main">
+<body id="menu_style"> 
+<div class="margin Competence_style" id="page_style">
+ 	<!-- <div class="search  clearfix">
+   		<input name="username" type="text" id="search" class="form-control col-xs-8"/><button class="btn button_btn bg-deep-blue " onclick="search()"  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+	</div> -->
+</div>
+<div class="compete_list">
+       <table id="sample_table" class="table table_list table_striped table-bordered dataTable no-footer">
+		 <thead>
+			<tr>
+			  <th width="10%">订单详情ID</th>
+			  <th>商品名称</th>
+			  <th width="10%">商品属性</th>
+			  <th>商品图片</th>
+              <th>单价</th>
+              <th>数量</th>
+              <th>小计</th>     
+             </tr>
+		    </thead>
+             <tbody class="list">
+            <foreach name="list" key="k" item="v" > 
+				<tr>
+					<td>{$v['id']}</td>
+					<td>{$v['gid']}</td>
+	                <td>{$v['attr']}</td>
+	                <td><img src="__PUBLIC__/Uploads/{$v['pic']}" style="width:100px"></td>
+					<td>￥{$v['price']}</td>
+					<td>{$v['num']}</td>
+					<td class="totaliy">{$v['price']*$v['num']}.00</td>
+				</tr>
+            </foreach>
+            <tr>
+				<td colspan="2" style="text-align: left;font-size:16px">
+					<h2>订单信息：</h2>
+					<p>订单号：{$list[0]['oid']}</p>
+					<p>订单时间：{$list[0]['addtime']}</p>
+					<p>收货电话：{$list[0]['phone']}</p>
+					<p>收货地址：{$list[0]['address']}</p>
+				</td>
+				<td colspan="2">
+					<p>订单留言：{$list[0]['message']}</p>
+				</td>
+				<td style="color:red">订单状态:{$list[0]['status']}</td>
+				<td style="color:red" >会员减额:-￥<span class="jian"></span></td>
+				<td colspan="2" style="color:red" >实际付款：￥<span class="fact">{:I('total')}</span></td>	
+            </tr>
+		      </tbody>								
+	        </table>
+     </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<style>
+	span{
+		margin-right:20px;
+	}
+</style>
+<script>
+var price = $('.totaliy');
+total = 0;
+for(i = 0;i<price.length;i++){
+	total += parseInt(price[i].innerHTML); 
+}
+var fact = $('.fact').html()
+$('.jian').html( ((total)*100-(fact)*100)/100 );
+$(function(){
+	$("#Competence_sort").click(function(){
+		var option=$(this).find("option:selected").text();
+		var value=$(this).val();
+		if(value==0){
+			  
+			$("#sample_table tbody tr").show()
+			}
+			else{
+		$("#sample_table tbody tr").hide().filter(":contains('"+(option)+"')").show();	
+			}
+		}).click();	
+	});
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+
+
+</script>
+</block>

@@ -1,0 +1,142 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+	<meta name="renderer" content="webkit">
+	<title>订单提交成功</title>
+    <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+	<script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/Home-js/js-tab.js"></script>
+    <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+    <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+
+ </head>
+ </block>
+ <body>
+
+<!--- header begin-->
+<block name="search">
+    <div class="container clearfix">
+        <div class="header-logo fl" style="width:212px;"><h1><a href="{:U('Index/index')}"><img src="__PUBLIC__/Home-icon/logo.png"></a></h1></div>
+        <div class="pc-order-titlei fl"><h2>填写订单</h2></div>
+        <div class="pc-step-title fl">
+            <ul>
+                <li class="cur2"><a href="#">1 . 我的购物车</a></li>
+                <li class="cur2"><a href="#">2 . 填写核对订单</a></li>
+                <li class="cur"><a href="#">3 . 成功提交订单</a></li>
+            </ul>
+        </div>
+    </div>
+</block>
+</header>
+<!-- header End -->
+<block name="main">
+<!-- 订单提交成功 begin-->
+<section>
+    <div class="containers">
+        <div class="pc-order-title"><h3>您的订单已提交成功!</h3></div>
+        <div class="pc-border">
+            <div class="pc-order-text">
+                <p>订单提交成功，请您尽快付款！   订单号 ：<em>{$info['oid']}</em></p>
+                <p class="reds">请您在提交订单后24小时内完成付款，否则订单自动取消。</em></p>
+            </div>
+            <div class="pc-line"></div>
+            <div class="pc-order-text">
+                <p>收货地址：{$info['address']} 收货人：{$info['receiver']} {$info['phone']|substr_replace=###,'****',3,4}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 订单提交成功 End-->
+
+<div class="pc-buying clearfix" style="margin-top:30px">
+    <div class="time-list time-list-w fl">
+        <div class="time-title">
+            <ul class="brand-tab H-table H-table-shop clearfix fl" id="H-table">
+                <li class="cur"><a href="javascript:void(0);" class="cur">支付宝</a></li>
+                <li><a href="javascript:void(0);">储蓄卡</a></li>
+                <li><a href="javascript:void(0);">信用卡</a></li>
+            </ul>
+            <span class="pc-order-price">总价：￥{$info['total']}</span>
+        </div>
+        <div class="time-border time-border-h clearfix">
+            <div class="time-border-list pc-shop-clear pc-order-clear H-over clearfix">
+                <ul class="pc-order-list clearfix">
+                    <li><a href="#"><img src="theme/bank/1.png"></a> </li>
+
+                </ul>
+            </div>
+            <div style="display:none;" class="time-border-list  pc-shop-clear pc-order-clear H-over clearfix">
+                <ul class="pc-order-list">
+                <li><a href="#"><img src="theme/bank/1.png"></a> </li>
+                </ul>
+            </div>
+            <div style="display:none;" class="time-border-list  pc-shop-clear pc-order-clear H-over clearfix">
+                <ul class="pc-order-list">
+                <li><a href="#"><img src="theme/bank/1.png"></a> </li>
+                </ul>
+            </div>
+            <div class="pc-order-go"><a href="{:U('Order/paySuccess')}?mark=true&oid={$info['oid']}">去网银支付</a></div>
+        </div>
+    </div>
+</div>
+</block>
+<!--- footer begin-->
+<block name="link">
+</block>
+<block name="js">
+</block>
+<!-- footer End -->
+</body>
+</html>

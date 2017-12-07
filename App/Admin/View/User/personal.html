@@ -1,0 +1,76 @@
+<extend name="Index/index" />
+<block name="main">
+<body>
+<div class="margin add_administrator" id="page_style">
+    <div class="add_style add_administrator_style">
+    <div class="title_name">管理员个人信息</div>
+    <form action="{:U('User/add')}" method="post" id="form-admin-add">
+    <ul>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>用户名：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12" id="user-name" datatype="*2-16" value="{$info.username}" disabled=""></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>角色：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12" id="user-name" datatype="*2-16" value="{$info.role}" disabled=""></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>状态：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12" id="user-name" datatype="*2-16" value="{$info.status}" disabled=""></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+      <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>拥有的权限：</label>
+      <div class="formControls col-xs-6"> <span class="select-box" style="width:150px;">
+				<select class="select" name="role" size="1">
+					<foreach name="per" item="vo">
+                        <option value="">{$vo}</option>
+                    </foreach>
+				</select>
+				</span>
+         </div>
+     </li>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>管理员邮箱：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12" id="user-name" datatype="*2-16" value="{$info.email}" disabled=""></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>联系电话：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12" id="user-name" datatype="*2-16" value="{$info.phone}" disabled=""></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+    </ul>
+    </form>
+    </div>
+    <div class="split_line"></div>
+    <div class="Notice_style l_f">
+      
+    </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+
+</script>
+</block>

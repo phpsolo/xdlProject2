@@ -1,0 +1,363 @@
+ <extend name="Index/index"/>
+ <block name="top">
+<!doctype html>
+<html>
+ <head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+    <meta name="renderer" content="webkit">
+    <title>歪秀购物</title>
+   <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+    <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+    <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+            $('a').hover(function() {
+                $(this).removeClass('grayscale')
+            }, function() {
+                $(this).addClass('grayscale')
+            });
+    </script>
+     <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+ </head>
+ <body>
+</block>
+<block name="main">
+<style>
+    .pc-term-dl span:hover{
+        cursor:pointer;
+    }
+    .my_checked:checked + span{
+        border:2px solid red;
+    }
+    .my_span{
+        border:2px solid lightgray;
+        display: inline-block;
+        padding: 10px;
+    }
+    .my_span:hover{
+        border:2px solid #f25350;
+    }
+    .my_span:hover > img{
+        display:none;
+    }
+    .my_span > i{
+        display: none;
+        text-align:center;
+        width:100%;
+        height: 100%;
+        line-height: 50px;
+    }
+    .my_xspan > i{
+        display: none;
+        text-align:center;
+        width:100%;
+        height: 100%;
+        line-height: 50px;
+    }
+    .my_span:hover > i{
+        display:inline-block;
+        color: #f25350;
+        font-size:14px;
+    }
+    .my_xspan i{
+        display:inline-block;
+        color: #f25350;
+        font-size:14px;
+    }
+</style>
+<header id="pc-header">
+    <div class="yHeader">
+        <div class="yNavIndex">
+            <div class="pullDown">
+                <h2 class="pullDownTitle">全部商品分类</h2>
+            </div>
+            <ul class="yMenuIndex">
+                <li><a href="" target="_blank">服装城</a></li>
+                <li><a href="" target="_blank">美妆馆</a></li>
+                <li><a href="" target="_blank">美食</a></li>
+                <li><a href="" target="_blank">全球购</a></li>
+                <li><a href="" target="_blank">闪购</a></li>
+                <li><a href="" target="_blank">团购</a></li>
+                <li><a href="" target="_blank">拍卖</a></li>
+                <li><a href="" target="_blank">金融</a></li>
+                <li><a href="" target="_blank">智能</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="containers">
+    <div class="pc-nav-item fl">
+        <empty name="parent">
+            <a style="color:#f25350" class="pc-title" href="{:U('Index/index')}">首页</a>
+        <else />
+            <a style="color:#f25350" class="pc-title" href="{:U('Index/index')}">首页</a>>>  
+            <?php for($i = count($parent)-1; $i >= 0; $i--) : ?>
+            <a style="color:#f25350" class="pc-title" href="{:U('index', ['id' => $parent[$i]['id']])}">{$parent[$i]['name']}</a> &gt; &gt;
+            <?php endfor; ?>
+        </empty>
+    </div>
+</div>
+
+<div class="containers clearfix">
+    <div class="pc-info fr">
+        <div class="pc-term">
+            <span style="margin:10px;font-size: 15px">品牌：</span>
+            <dl class="pc-term-dl clearfix">
+                <empty name="brand">
+                    <dd>暂无</dd>
+                <else />
+                    <dd><label><input style="display:none" class="my_checked" type="radio" name="brand" value="" /><span style="width:100px;height:50px" class="my_span my_xspan" onClick="change(this)" ><i>全部品牌</i></span></label></dd>
+                    <foreach name="brand" item="v">
+                    <dd><label><input style="display:none" class="my_checked" type="radio" name="brand" value="{$v['id']}" /><span style="width:100px;height:50px" class="my_span" onClick="change(this)" ><img style="width:100px;height:50px;" src="__PUBLIC__/Uploads/{$v['pic']}" title="{$v['brandname']}" alt="{$v['brandname']}" /><i>{$v['brandname']}</i></span></label></dd>
+                    </foreach>
+                </empty>
+            </dl>
+<!-- 品牌 -->
+            <div class="pc-line"></div>
+            <div class="pc-search clearfix">
+                <div class="fl pc-search-in">
+                <empty name="me">
+                <else />
+                    <input type="hidden" name="id" id="my_id" value="{$me['id']}">
+                </empty>
+                    <input type="text" onblur="change(this)" class="pc-search-w" id="my_name">
+                    <input type="text" onblur="change(this)" class="pc-search-s" id="my_min_price" placeholder="大于">
+                    <input type="text" onblur="change(this)" class="pc-search-s" id="my_max_price" placeholder="小于">
+                    <a class="pc-search-a">搜索</a>
+                </div>
+               
+            </div>
+        </div>
+        <div class="pc-term">
+            <div class="clearfix pc-search-p">
+                <div class="fl pc-search-e">
+                    <label><a class="cur my_radio" onClick="change(this)">销量</a><input type="radio" style="display:none" name="order" value="buynum desc"></label>
+                    <label><a class="my_radio" onClick="change(this)">价格</a><input style="display:none" type="radio" name="order" value="price"></label>
+                    <label><a class="my_radio"  onClick="change(this)">上架时间</a><input type="radio" style="display:none" name="order" value="addtime desc"></label>
+                    <input type="hidden" name="search" id="search" value="{$search}">
+                </div>
+                
+            </div>
+            <!-- <div class="pc-search-i">
+                <div class="fr">
+                    <span class="pc-search-t"><b>1</b><em>/</em><i>{$totalPages}</i></span>
+                    <a href="#" class="pc-search-d">上一页</a>
+                    <a href="#">下一页</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="time-border-list pc-search-list clearfix">
+            <ul class="clearfix my_ul">
+            <empty name="corrected">
+                <else />
+                <a href="{:U('index',['search'=>$corrected])}"><h1 style="color:red">您要找的是不是：{$corrected}</h1></a>
+            </empty>
+                <empty name="data">
+                <li><h2>暂无商品</h2></li>
+                <else />
+                <foreach name="data" item="value">
+                <li>
+                    <a href="{:U('detail', ['id' => $value['id']])}"> <img keywords="{$value['des']}" title="{$value['des']}" style="width:213px;height:213px" src="__PUBLIC__/Uploads/{$value['pic']}"></a>
+                    <p class="head-name"><a href="#">{$value['name']}</a> </p>
+                    <p><span class="price">￥{$value['price']}</span></p>
+                    <p class="head-futi clearfix"><span class="fr">{$value['buynum']}人购买</span></p>
+                    <p class="clearfix"><span class="label-default fl" style="width:55px">超值</span>
+                    <empty name="ida">
+
+                        <a href="{:U('Login/login')}" class="fr pc-search-c">收藏</a> </p>
+                    <else />
+                        <if condition="($value['collect'] eq 0)">
+                            <a onclick="add(this,{$value['id']},{$_SESSION['HomeUser']['id']})" href="javascript:void(0);" class="fr pc-search-c">收藏</a> </p>
+                        <elseif condition="$value['collect'] eq 1"/>
+                            <a onclick="del(this,{$_SESSION['HomeUser']['id']},{$value['id']},)" href="javascript:void(0);" class="fr pc-search-c">取消收藏</a> </p>
+                        </if>
+                    </empty> 
+                </li>
+                </foreach>
+                </empty>
+            </ul>
+            <div class="clearfix">
+                <div class="fr pc-search-g">
+                <b class="page" id="ipage">
+                    {$btns}
+                </b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+<script>
+/*********分页*********/
+$('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+    $('.pc-search-g').delegate('a', 'click', function() {
+        let url = $(this).attr('href');
+        console.log(url);
+        $.ajax({
+            url:url,
+            type:'get',
+            data:{
+
+            },
+            success:function(data)
+            {       
+
+                // alert(1);
+                console.log(data);
+                $('.my_ul').empty();
+                $('.pc-search-g').empty().append(data.btns);
+                $('.current').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');;
+                
+                delete data.btns;
+                $(data['data']).map(function() {
+                    div = '<li><a href="__CONTROLLER__/detail/id/' + this.id + '"> <img style="width:213px;height:213px"  keywords="' + this.des + '" title="' + this.des + '" src="__PUBLIC__/Uploads/' + this.pic + '"></a><p class="head-name"><a href="#">' + this.name + '</a> </p><p><span class="price">￥' + this.price + '</span></p><p class="head-futi clearfix"><span class="fr">'+ this.buynum + '人购买</span></p><p class="clearfix"><span class="label-default fl" style="width:55px">超值</span>';
+                    if(data.session){
+                        div += this.collect == '0'?'<a onclick="add(this,'+this.id+','+data.session+')" href="javascript:void(0);" class="fr pc-search-c">收藏</a> </p>':'<a onclick="del(this,'+data.session+','+this.id+')" href="javascript:void(0);" class="fr pc-search-c">取消收藏</a> </p>';
+                    } else {
+                        div += '<a href="{:U("Login/login")}" class="fr pc-search-c">收藏</a> </p>';
+                    }
+                    div += '</li>';
+                    $('.my_ul').append(div);
+                    // +(this.collect == '0'?'<a onclick="add(this,'+this.id+','+data.session+')" href="javascript:void(0);" class="fr pc-search-c">收藏</a> </p>':'<a onclick="del(this,'+data.session+','+this.id+',)" href="javascript:void(0);" class="fr pc-search-c">取消收藏</a> </p>')+
+                });
+            }
+        });
+        return false;
+    });
+
+/*********ajax筛选条件*********/
+function change(obj)
+{
+    brand = null;
+    $('.my_checked').map(function(){
+        if(this.checked)
+        {
+            brand = $(this).val();
+        }
+    });
+    // console.log($(obj).prev().prop('checked'));
+    if($(obj).prev().attr('class') == 'my_checked' && !$(obj).prev().prop('checked'))
+    {
+
+        $(obj).parent().parent().siblings().children().children().prop('checked', false);
+        var brand = $(obj).prev().val();
+    } else if($(obj).attr('class') == 'my_radio')
+    {
+        $('.my_radio').removeClass('cur');
+        $(obj).addClass('cur');
+    }
+    // console.log(brand);
+    var order = $('.cur').next().val();
+    var id = $('#my_id').val();
+    var name = $('#my_name').val();
+    var minprice = $('#my_min_price').val();
+    var maxprice = $('#my_max_price').val();
+    var search =$('#search').val();
+    // console.log(brand, id, name, minprice, maxprice);
+    $.ajax({
+        url:'{:U("index")}',
+        type:'get',
+        data:{
+            id:id,
+            brand:brand,
+            order:order,
+            name:name,
+            minprice:minprice,
+            maxprice:maxprice,
+            search:search,
+
+        },
+        success:function(data)
+        {
+            // console.log(data);
+            $('.my_ul').empty();
+            $('.pc-search-g').empty().append(data.btns);
+            $('.current').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+
+            $(data['data']).map(function() {
+                    div = '<li><a href="__CONTROLLER__/detail/id/' + this.id + '"> <img style="width:213px;height:213px"  keywords="' + this.des + '" title="' + this.des + '" src="__PUBLIC__/Uploads/' + this.pic + '"></a><p class="head-name"><a href="#">' + this.name + '</a> </p><p><span class="price">￥' + this.price + '</span></p><p class="head-futi clearfix"><span class="fr">'+ this.buynum + '人购买</span></p><p class="clearfix"><span class="label-default fl" style="width:55px">超值</span>';
+                    if(data.session){
+                        div += this.collect == '0'?'<a onclick="add(this,'+this.id+','+data.session+')" href="javascript:void(0);" class="fr pc-search-c">收藏</a> </p>':'<a onclick="del(this,'+data.session+','+this.id+')" href="javascript:void(0);" class="fr pc-search-c">取消收藏</a> </p>';
+                    } else {
+                        div += '<a href="{:U("Login/login")}" class="fr pc-search-c">收藏</a> </p>';
+                    }
+                    div += '</li>';
+                    $('.my_ul').append(div);
+            });
+        }
+    });
+}
+</script>
+<script>
+
+/******ajax收藏********/
+    // 删除
+    function del(obj,uid,gid)
+        {   
+            // 提交ajax
+            $.post('{:U("Collect/delCollect2")}',{'uid':uid,'gid':gid},function(res){ 
+                if (res.status == '1') {
+                    // alert(1);
+                    // 增加收藏节点
+                    $(obj).parent().prepend("<a onclick='add(this,{$value['id']},{$_SESSION['HomeUser']['id']})' href='javascript:void(0)' class='fr pc-search-c'>收藏</a> </p>");
+                    
+                    // 删除原节点
+                    $(obj).remove();
+                } else {
+                    $('.alert').html('删除失败').addClass('alert-success').show().delay(1500).fadeOut();
+                }                              
+            });
+        }
+    // 添加
+    function add(obj,gid,uid)
+        {  
+            // 提交ajax
+            $.post('{:U("Collect/addCollect")}',{'gid':gid,'uid':uid},function(info){ 
+                if (info.status == '1') {
+                    // 增加收藏节点
+                    $(obj).parent().prepend("<a onclick='del(this,{$_SESSION['HomeUser']['id']},{$value['id']})' href='javascript:void(0);' class='fr pc-search-c'>取消收藏</a> </p>");
+                    // 删除原节点
+                    $(obj).remove();
+                    $('.alert').html('收藏成功').addClass('alert-success').show().delay(1500).fadeOut();
+                } else {
+                    window.location.href="{:U('Login/login')}";
+                }                              
+            });
+        }
+</script>
+</block>

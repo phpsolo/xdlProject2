@@ -1,0 +1,169 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+     <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+</block>
+<body>
+<!-- header End -->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+              
+                <div class="fl"><a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a></div>
+              
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- 商城快讯 begin -->
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd ><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd class="cur"><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                    
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>意见反馈</h2></div>
+            </div>
+            <div class="member-border">
+               <div class="member-caution clearfix">
+                   <ul>
+                       <li class="clearfix">
+                           <p><strong><span style="color:red">*</span>问题描述：</strong></p>  
+                            <form method="post" enctype="multipart/form-data">
+                            <div>
+                            	<textarea id="suggest" placeholder="请描述您的问题，不要输入您的隐私隐私" name="des" rows="3" cols="33"></textarea><br>
+                            	<label for="pic"><a style="font-size:15px;">上传截图：<img src="__PUBLIC__/Home-img/images/upload.jpg" style="width:20px;vertical-align:middle;margin-top:-3px"></a></label>
+                            	<span class="pic"></span>
+                            	<input type="file" id="pic" name="pic[]" style="visibility:hidden" multiple="">
+                            </div>
+
+                            <p><input type="submit" class="btn" id="sub_btn"  value="提 交"></p>
+                            </form>
+                       </li>
+                   </ul>
+                   
+               </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+#suggest{
+	height: 120px;
+	width:400px;
+	border: 1px solid #ccc;
+	font-size: 13px;
+	padding: 1px 8px;
+	resize: none;
+}
+</style>
+<script>
+	$('#pic').change(function(){
+
+	$('.pic').html($('#pic').val());
+	})
+
+</script>
+<!-- 商城快讯 End -->
+
+<!--- footer begin-->
+
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

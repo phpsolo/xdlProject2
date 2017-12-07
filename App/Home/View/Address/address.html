@@ -1,0 +1,243 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+     <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+</block>
+<body>
+<!-- header End -->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+              
+                <div class="fl"><a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a></div>
+              
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- 商城快讯 begin -->
+            <div class="member-lists">
+                <dl>
+                   <dt>我的商城</dt>
+                    <dd ><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd class="cur"><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>地址管理</h2></div>
+            </div>
+            <div class="member-border">
+                <div class="member-newly"><b style="background-color: skyblue"><a href="{:U('Address/doAddress')}">新增收货地址</a></b>&nbsp;您已经创建了<i class="reds">{$count}</i>个收货地址了，最多可创建<i class="reds">20</i>个</div>
+                <div class="member-sites">
+                    <ul id="ul1">
+                    <volist name="list" id="address">
+                        <li class="clearfix">
+                            <div class="default fl" id="moren">{$address['status'] == '1'?'<a>默认地址</a>':''}</div>
+                            <div class="user-info1 fl clearfix">
+                                <div class="user-info">
+                                    <span class="info1">收货人：</span>
+                                    <span class="info2">{$address.linkman}</span>
+                                </div>
+                                <div class="user-info">
+                                    <span class="info1">地址：</span>
+                                    <span class="info2">{$address.address}</span>
+                                </div>
+                                <div class="user-info">
+                                    <span class="info1">手机：</span>
+                                    <span class="info2">{$address.phone}</span>
+                                </div>
+                            </div>
+                            <div class="pc-event" id="{$address['id']}">
+                                {$address['status'] == '0'?'<a href="javascript:void(0);" onclick="defaultAddress(this)" id="oldAddress2">设置为默认地址</a>':'<a class="pc-event-d" id="oldAddress">默认地址</a>'}
+                                <a href="{:U('Address/editAddress')}?id={$address.id}">编辑 </a>
+                                <a onclick="del(this,{$address['id']})" href="javascript:void(0);">删除</a>
+                            </div>
+                        </li>
+                </volist>
+                        </ul>
+                    <!-- ajax删除 -->
+                    <script>
+                        function del(obj,id)
+                        {   
+                            // 提交ajax
+                            $.post('{:U("ajaxDel")}','id='+id,function(res){ 
+                                if (res.status == 1) {
+                                    $(obj).parent().parent().remove();
+                                } else{
+                                    alert('不能删除默认地址');
+                                }                              
+                            });
+                        }
+                    /*******设置默认地址*******/
+                        function defaultAddress(obj)
+                        {
+                            // 获取id
+                            var id = obj.parentNode.getAttribute('id');
+                            // ajax 提交
+                            $.post('{:U("ajaxAddress")}','id='+id,function(res){
+
+                                if (res.status == 1){
+                                    // 默认地址显示框
+                                    $(obj).parents("ul").find("#moren a").remove();
+
+                                    $(obj).parents("li").find("#moren").prepend('<a id="oldaddress">默认地址</a>');
+                                    // 默认地址按钮
+                                    // 先添加新节点在删除旧节点
+                                    $(obj).parents("ul").find("#oldAddress").before('<a href="javascript:void(0);" onclick="defaultAddress(this)" id="">设置为默认地址</a>');
+                                    $(obj).parents("ul").find("#oldAddress").remove();
+                                    
+                                    // 设置新节点
+                                    $(obj).parent("div").prepend('<a class="pc-event-d" id="oldAddress">默认地址&nbsp;&nbsp;&nbsp;&nbsp;</a>');
+                                    // 删除原节点
+                                    $(obj).remove();
+                                } else {
+                                    alert(res.msg);
+                                }
+                            })
+                        }
+                    </script>
+
+                        
+                <div class="member-pages clearfix">
+                    <div class="fr pc-search-g">
+                    <b class="page" id="ipage">
+                    {$page}
+                    </b>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ajax分页 -->
+<script>
+$('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+$('body').delegate('.page a','click',function(){
+    var url = $(this).attr('href');
+    // alert(url);
+    $.ajax({
+        type:'get',
+        url:url,
+        success:function(res){
+            // alert(res);
+            console.log(res);
+            li = '';
+            // alert(1);
+            $('#ipage').html(res.page);
+            delete res.page;
+            for (var k in res){
+                li +=   '<li class="clearfix"><div class="default fl" id="moren">'+(res[k].status == '1'?'<a>默认地址</a>':'')+'</div><div class="user-info1 fl clearfix"><div class="user-info"><span class="info1">'+"收件人："+'</span><span class="info2">'+res[k].linkman+'</span></div><div class="user-info"><span class="info1">'+"地址："+'</span><span class="info2">'+res[k].address+'</span></div><div class="user-info"><span class="info1">'+"手机："+'</span><span class="info2">'+res[k].phone+'</span></div></div><div class="pc-event" id="'+res[k].id+'">'+
+                            (res[k].status == '0'?'<a href="javascript:void(0);" onclick="defaultAddress(this)" id="oldAddress2">设置为默认地址</a>':'<a class="pc-event-d" id="oldAddress">默认地址</a>')+'<a href="{:U("Address/editAddress")}?id='+res[k].id+'">编辑 </a><a onclick="del(this,'+res[k].id+')" href="javascript:void(0);">删除</a></div></li>';
+     
+            }
+            $('.page span').wrap('<span style="float: left;border: 1px solid #CCCCCC;color: #fff;border-radius: 3px;width:28px;height:27px;line-height: 25px;text-align:center;margin-left:2px"></span>');
+            // console.log(li);  
+            $('#ul1').html(li);
+
+        },
+
+    })
+        return false;
+})
+</script>
+<!-- 商城快讯 End -->
+
+<!--- footer begin-->
+
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

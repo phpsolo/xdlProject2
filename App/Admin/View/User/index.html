@@ -1,0 +1,163 @@
+<extend name="Index/index" />
+<block name="main">
+<body> 
+<div class="margin Competence_style" id="page_style">
+    <div class="operation clearfix">
+
+
+   <div class="search  clearfix">
+
+   <input name="username" type="text" id="search" class="form-control col-xs-8"/><button class="btn button_btn bg-deep-blue " onclick="search()"  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+</div>
+</div>
+<div class="compete_list">
+       <table id="sample_table" class="table table_list table_striped table-bordered dataTable no-footer">
+		 <thead>
+			<tr>
+			  <th>ID</th>
+			  <th>用户名</th>
+			  <th>邮箱</th>
+              <th>性别</th>
+              <th>角色</th>
+              <th>总积分</th>
+			  <th class="hidden-480">注册时间</th>  
+              <th>账号状态</th>         
+              <th>激活状态</th>
+              <th class="hidden-480">操作</th>
+             </tr>
+		    </thead>
+             <tbody class="list">
+
+            <foreach name="list" key="k" item="v" > 
+			  <tr>
+				<td>{$v['id']}</td>
+				<td>{$v['username']}</td>
+				<td>{$v['email']}</td>
+				<td >{$v['sex']}</td>
+				<td>{$v['role']}</td>
+				<td >{$v['score']}</td>
+                <td>{$v['addtime']}</td>
+                <td class="td-status"><span class="label {$v['status']=='正常'?'label-success':'btn-danger'}  label-sm">{$v['status']}</span></td>
+                <td class="td-statu"><span class="label {$v['email_status']=='已激活'?'label-success':'btn-danger'} label-sm">{$v['email_status']}</span></td>
+                <td class="td-manage" gid="{$v['id']}">
+				{$v['status'] == '正常'?'
+                 <a title="停用" onclick="Competence_close(this)" href="javascript:;" class="btn button_btn btn-Dark-success">禁用</a>': 
+                 '<a style="text-decoration:none" class="btn button_btn btn-gray" onClick="Competence_start(this)" href="javascript:;" title="启用">启用</a>'}
+				</td>
+			   </tr>
+            </foreach>  
+		      </tbody>
+            	<tr>
+            		<td colspan="11" id="page">
+	            		{$page}            			
+            		</td>
+            	</tr>								
+	        </table>
+     </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+/*管理员-停用*/
+function Competence_close(obj){
+	// 获取ID
+	var gid = obj.parentNode.getAttribute('gid');
+	if (gid == 1) {
+		alert('不能禁用主超级管理员');
+	} else {
+		layer.confirm('确认要禁用吗？',function(index){
+			$.ajax({
+				type:'post',
+				url:'{:U("editStatus")}',
+				data:{'id':gid},
+				success:function(res){
+					console.log(res);
+					if(res.status > 0) {
+						$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn button_btn btn-gray" onClick="Competence_start(this)" href="javascript:;" title="启用">启用</a>');
+						$(obj).parents("tr").find(".td-status").html('<span class="label btn-danger label-sm">禁用</span>');
+						$(obj).remove();
+						layer.msg('已禁用!',{icon: 5,time:1000});
+					}
+				} 
+			});
+		});
+	}
+}
+
+/*管理员-启用*/
+function Competence_start(obj){
+	// 获取ID
+	var gid = obj.parentNode.getAttribute('gid');
+	layer.confirm('确认要启用吗？',function(index){
+		$.ajax({
+			type:'post',
+			url:'{:U("editStatus")}',
+			data:{'id':gid},
+			success:function(res){
+				if(res.status > 0) {
+					$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn button_btn  btn-Dark-success" onClick="Competence_close(this)" href="javascript:;" title="停用">禁用</a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-success label-sm">正常</span>');
+					$(obj).remove();
+					layer.msg('已启用!',{icon: 6,time:1000});
+				}
+			} 
+		});
+	});
+}
+
+/****添加分页样式******/
+$('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+
+function search() {
+	var username = $('#search').val();
+	$.ajax({
+		type:"post",
+		url : "{:U('index')}",
+		data : {"username": username} ,
+		success:function(res){
+			tr = '';
+			$('#page').html(res.page);
+                delete res.page;
+			for (var k in res){
+                    tr += '<tr><td>'+res[k].id+'</td><td>'+res[k].username+'</td><td>'+res[k].email+'</td><td>'+res[k].sex+'</td><td>'+res[k].role+'</td><td>'+res[k].score+'</td><td>'+res[k].addtime+'</td><td class="td-status"><span class="label '+(res[k].status=="正常"?"label-success":"btn-danger")+' label-sm">'+res[k].status+'</span></td><td class="td-statu"><span class="label '+(res[k].email_status =="已激活"?"label-success":"btn-danger") +' label-sm">'+res[k].email_status+'</span></td><td class="td-manage" gid="'+res[k].id+'">'+(res[k].status == "正常"?"<a title='停用' onclick='Competence_close(this)' href='javascript:;' class='btn button_btn btn-Dark-success'>禁用</a>":"<a style='text-decoration:none' class='btn button_btn btn-gray' onClick='Competence_start(this)' href='javascript:;' title='启用'>启用</a>")+'</td></tr>';
+                    
+                }  
+                $('.list').html(tr);
+                $('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+		}
+	});
+}
+
+$('body').delegate('#page a','click',function(){
+        var url = $(this).attr('href');
+        $.ajax({
+            type:'get',
+            url:url,
+            success:function(res){
+                tr = '';
+				$('#page').html(res.page);
+                delete res.page;
+				for (var k in res){
+                    tr += '<tr><td>'+res[k].id+'</td><td>'+res[k].username+'</td><td>'+res[k].email+'</td><td>'+res[k].sex+'</td><td>'+res[k].role+'</td><td>'+res[k].score+'</td><td>'+res[k].addtime+'</td><td class="td-status"><span class="label '+(res[k].status=="正常"?"label-success":"btn-danger")+' label-sm">'+res[k].status+'</span></td><td class="td-statu"><span class="label '+(res[k].email_status =="已激活"?"label-success":"btn-danger") +' label-sm">'+res[k].email_status+'</span></td><td class="td-manage" gid="'+res[k].id+'">'+(res[k].status == "正常"?"<a title='停用' onclick='Competence_close(this)' href='javascript:;' class='btn button_btn btn-Dark-success'>禁用</a>":"<a style='text-decoration:none' class='btn button_btn btn-gray' onClick='Competence_start(this)' href='javascript:;' title='启用'>启用</a>")+'</td></tr>';
+                    
+                }  
+                $('.list').html(tr);
+                $('#page').children().wrap('<ul></ul>').children().unwrap().parent().attr('class','pagination').children().wrap('<li></li>');
+            }
+        })
+        return false;
+    })
+</script>
+</block>

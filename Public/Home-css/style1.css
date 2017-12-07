@@ -1,0 +1,19 @@
+html,body,div,ul,li,a,img,h1{padding: 0;margin: 0;}
+ul,li{list-style:none;}
+a{outline:none;/*移除虚线框  IE8,FF有用*/hide-focus: expression(this.hideFocus=true); /*IE6、IE7*/}
+h1{font-size:100%;font-family:\5FAE\8F6F\96C5\9ED1; font-size: 18px; font-weight: bold;}
+a,img{border:0;}
+.link{width: 1000px; margin:0 auto; height: auto; overflow: hidden;}
+.link h1{height: 40px; line-height: 40px; padding-left: 10px;}
+.link ul{ border-top: 1px solid #d8d8d8;  border-left: 1px solid #d8d8d8;  height: auto; overflow: hidden; width: 990px; margin: 0 auto;}
+.link li{width: 140px; height: 65px; float: left; border-right: 1px solid #d8d8d8;border-bottom: 1px solid #d8d8d8; padding: 10px 12px;}
+.link li a{display: block; float: left; width: 140px; height: 65px; overflow: hidden;}
+.link p{font-size: 12px; line-height: 22px; text-align: center;}
+.link p a{color: #fe6400;}
+.link p a:hover{color:#333;}
+/*重要的样式 一定要保留这样2行*/
+.grayscale img{filter: grayscale(100%); -webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); -ms-filter: grayscale(100%); -o-filter: grayscale(100%); filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter: grayscale(1);}
+.grayscale:hover img{-webkit-filter: grayscale(0); -moz-filter: grayscale(0); -ms-filter: grayscale(0); -o-filter: grayscale(0);
+filter:url("about:blank");
+filter: grayscale(0); filter: rgb; }
+/*重要的样式 一定要保留这样2行*/

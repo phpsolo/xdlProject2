@@ -1,0 +1,82 @@
+<extend name="Index/index" />
+<block name="main">
+<body>
+<div class="margin add_administrator" id="page_style">
+    <div class="add_style add_administrator_style">
+    <div class="title_name">添加用户</div>
+    <form action="{:U('User/add')}" method="post" id="form-admin-add">
+    <ul>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i>*</i>用户名：</label>
+     <div class="formControls col-xs-6">
+     <input type="text" class="input-text col-xs-12"  required placeholder="用户名" id="user-name" name="username" datatype="*2-16" nullmsg="用户名不能为空"></div>
+    <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+     <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>初始密码：</label>
+	 <div class="formControls col-xs-6">
+	 <input type="password" placeholder="密码" name="password" autocomplete="off" required class="input-text col-xs-12" datatype="*6-20" nullmsg="密码不能为空">
+	</div>
+     <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+       <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>确认密码：</label>
+       <div class="formControls  col-xs-6">
+	<input type="password" placeholder="确认密码" required autocomplete="off" class="input-text Validform_error  col-xs-12" errormsg="您两次输入的密码不一致！" datatype="*" nullmsg="请再输入一次新密码！" recheck="userpassword" id="newpassword2" name="password2">
+	</div>
+	  <div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+      <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>邮&nbsp;箱：</label>
+      <div class="formControls col-xs-6">
+		<input type="text" class="input-text col-xs-12" placeholder="@" required name="email" id="email" datatype="e" nullmsg="请输入邮箱！">
+	   </div>
+		<div class="col-4"> <span class="Validform_checktip"></span></div>
+     </li>
+     <li class="clearfix">
+      <label class="label_name col-xs-2 col-lg-2"><i class="c-red">*</i>角&nbsp;色：</label>
+      <div class="formControls col-xs-6"> <span class="select-box" style="width:150px;">
+				<select class="select" name="role" size="1">
+					<option value="4">超级管理员</option>
+					<option value="5">用户管理员</option>
+					<option value="6">商品管理员</option>
+					<option value="7">订单管理员</option>
+				</select>
+				</span>
+         </div>
+     </li>
+     
+         <li class="clearfix">
+			<div class="col-xs-2 col-lg-2">&nbsp;</div>
+			<div class="col-xs-6">
+	  <input class="btn button_btn bg-deep-blue " type="submit" id="Add_Administrator" value="提交">
+      <input name="reset" type="reset" class="btn button_btn btn-gray" value="重置" />
+      
+			</div>
+		</li>
+    </ul>
+    </form>
+    </div>
+    <div class="split_line"></div>
+    <div class="Notice_style l_f">
+      
+    </div>
+</div>
+</body>
+</block>
+</html>
+<block name="js">
+<script>
+
+/*******滚动条*******/
+$("body").niceScroll({  
+	cursorcolor:"#888888",  
+	cursoropacitymax:1,  
+	touchbehavior:false,  
+	cursorwidth:"5px",  
+	cursorborder:"0",  
+	cursorborderradius:"5px"  
+});
+
+</script>
+</block>

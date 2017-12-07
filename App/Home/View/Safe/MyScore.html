@@ -1,0 +1,169 @@
+<extend name="Index/index"/>
+<block name="top">
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"> 
+  <meta name="renderer" content="webkit">
+  <meta content="歪秀购物, 购物, 大家电, 手机" name="keywords">
+  <meta content="歪秀购物，购物商城。" name="description">
+  <title>歪秀商城</title>
+  <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/Home-icon/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/base.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/home.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/member.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home-css/style.css">
+  <script type="text/javascript" src="__PUBLIC__/Home-js/jquery.js"></script>
+     <script>
+         $(function(){
+
+             $("#H-table li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over").hide();
+                         $(".H-over:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+             $("#H-table1 li").each(function(i){
+                 $(this).click((function(k){
+                     var _index = k;
+                     return function(){
+                         $(this).addClass("cur").siblings().removeClass("cur");
+                         $(".H-over1").hide();
+                         $(".H-over1:eq(" + _index + ")").show();
+                     }
+                 })(i));
+             });
+         });
+     </script>
+      <script type="text/javascript">
+         (function(a){
+             a.fn.hoverClass=function(b){
+                 var a=this;
+                 a.each(function(c){
+                     a.eq(c).hover(function(){
+                         $(this).addClass(b)
+                     },function(){
+                         $(this).removeClass(b)
+                     })
+                 });
+                 return a
+             };
+         })(jQuery);
+
+         $(function(){
+             $("#pc-nav").hoverClass("current");
+         });
+     </script>
+      <script type="text/javascript">
+            $(function() {
+                $('.dorpdown').hover(function() {
+                    $(this).addClass("hover");
+                }, function() {
+                    $(this).removeClass("hover");
+                })
+            })
+
+        </script>  
+ </head>
+</block>
+<body>
+<!-- header End -->
+<block name="main">
+<div class="containers"><div class="pc-nav-item"><a href="#">首页</a> &gt; <a href="#">会员中心 </a> &gt; <a href="#"></a></div></div>
+<section id="member">
+    <div class="member-center clearfix">
+        <div class="member-left fl">
+            <div class="member-apart clearfix">
+              
+                <div class="fl"><a href="{:U('Order/upload')}"><img src="__PUBLIC__/Uploads/{$Think.session.HomeUser.photo}" style="width:80px;height:80px"></a></div>
+              
+                <div class="fl">
+                    <p>用户名：</p>
+                    <p><a href="#" style="color:black">{$_SESSION['HomeUser']['username']}</a></p>
+                    <p>{$user[0]['role']}</p>
+                    <p >点击头像上传图片</p>
+                    
+                </div>
+            </div>
+<!-- 商城快讯 begin -->
+            <div class="member-lists">
+                <dl>
+                    <dt>我的商城</dt>
+                    <dd ><a href="{:U('Order/order')}">我的订单</a></dd>
+                    <dd><a href="{:U('Collect/collect')}">我的收藏</a></dd>
+                    <dd><a href="{:U('Safe/safe')}">账户安全</a></dd>
+                    <dd><a href="{:U('Address/address')}">地址管理</a></dd>
+                    <dd><a href="{:U('Safe/ModifyPass')}">修改密码</a></dd>
+                    <dd class="cur"><a href="{:U('Safe/MyScore')}">我的积分</a></dd>
+                    <dd><a href="{:U('Feedback/Feedback')}">意见反馈</a></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="member-right fr">
+            <div class="member-head">
+                <div class="member-heels fl"><h2>我的收藏</h2></div>
+                <div class="member-backs member-icons fr"><a href="#">搜索</a></div>
+                <div class="member-about fr"><input type="text" placeholder="商品名称/商品编号/订单编号"></div>
+            </div>
+            <div class="member-switch clearfix">
+                <ul id="H-table" class="H-table">
+                    <li class="cur"><a href="#">我的收藏的商品</a></li>
+                </ul>
+            </div>
+            <div class="member-border">
+
+
+               <div class="member-return H-over">
+                   <div class="member-troll clearfix">
+                       
+                   </div>
+                   <div class="member-vessel">
+                       <ul>
+                         <li class="clearfix" id="li1">
+                         </li>
+                         <h3>我的积分：<b style="color:red">{$score}</b></h3><br>
+                         <div>
+                          <h4 style="color:rgb(182, 29, 29)">积分规则:</h4><br>
+                          <p>1.1元 = 1积分;</p><br>
+                          <p>2.积分用于提升会员等级,提升等级后可以享受不同的折扣;</p><br>
+                          <p>3.50000>积分=>10000为<strong style="color:rgb(182, 29, 29)">VIP会员</strong>享受<strong style="color:rgb(182, 29, 29)">95折</strong>的折扣; 积分=>50000为<strong style="color:rgb(182, 29, 29)">钻石会员</strong>享受<strong style="color:rgb(182, 29, 29)">9折</strong>的折扣;</p><br>
+                          <p>4.本规则最终解释权归梁非凡所有！</p><br>
+                         </div>
+                         </div>
+                       </ul>
+                   </div>
+               </div>
+               <!-- ajax删除 -->
+               
+                <div class="clearfix" style="padding:30px 20px;">
+                    <div class="fr pc-search-g pc-search-gs">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- 商城快讯 End -->
+<!--- footer begin-->
+</block>
+<block name="link">
+
+</block>
+<block name="js">
+  
+</block>
+<!-- footer End -->
+</body>
+</html>

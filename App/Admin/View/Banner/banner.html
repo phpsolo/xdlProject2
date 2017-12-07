@@ -1,0 +1,70 @@
+<extend name="Index/index" />
+<block name="header">
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/jquery.dataTables.bootstrap.js"></script>
+</block>
+
+<block name="main">
+<body id="iframe_box">
+<div class="margin" id="page_style">
+<div class="operation clearfix">
+<span class="submenu"><a href="{:U('add')}"  class="btn button_btn bg-deep-blue" title="添加轮播图"><i class="fa  fa-edit"></i>&nbsp;添加轮播图</a></span>
+<div class="search  clearfix">
+
+</div>
+</div>
+<!--列表展示-->
+<div class="list_Exhibition margin-sx">
+    <table class="table table_list table_striped table-bordered" id="sample-table">
+        <thead>
+            <tr>
+                <th width="100">ID</th>
+                <th>轮播图片</th>
+                <th width="100">状态</th>
+                <th width="220">操作</th>
+            </tr>   
+        </thead>
+        <tbody>
+        <empty name="data">
+            <tr>
+            	<td colspan="4"><h2>暂无数据</h2></td>
+            </tr>
+        <else />
+        <foreach name="data" item="v">
+        	<tr>
+        		<td>{$v['id']}</td>
+        		<td><img style="height:80px" src="__PUBLIC__/Uploads/{$v['pic']}" /></td>
+            <td>{$v['status']}</td>
+        		<td > 
+        			<a style="color:white" class="btn button_btn btn-Dark-success" href="{:U('edit', ['id' => $v['id']])}" style="color:blue">修改</a>
+        			<a style="color:white" class="btn button_btn btn-danger" href="{:U('del', ['id' => $v['id']])}" style="color:red">删除</a>
+        		</td>
+        	</tr>
+        </foreach>
+        </empty>
+        </tbody>
+    </table>
+<div class="dataTables_paginate paging_bootstrap">
+{$btns}
+</div>
+</div>
+</div>
+</body>
+</block>
+
+<block name="js">
+<script type="text/javascript">
+$(reset());
+function reset()
+{
+    $('.dataTables_paginate').children().children().unwrap().wrap('<li></li>').parent().parent().wrapInner('<ul class="pagination"></ul>');
+}
+
+ $(document).ready(function(){
+	var ReturnWindow=$('#contents', parent.document); 
+	var width = ReturnWindow.css("width");
+	 $("#sample-table").css({"width":width-20+"px"});
+	  $('#sample-table').location.replace(location.href);
+	 });
+</script>
+</block>
